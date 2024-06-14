@@ -2,13 +2,15 @@ package doo.proyectofinal;
 import javax.swing.JFrame;
 
 public class Ventana extends JFrame {
+    Panel_fondo panel_fondo;
     public Ventana(){
         super();
+        panel_fondo = new Panel_fondo();
+        panel_fondo.setVisible(true);
         this.setLayout(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setBounds(0,0,1000,1000);
-        Panel_Fecha panel = new Panel_Fecha();
-        this.add(panel);
+        this.add(panel_fondo);
         this.setVisible(true);
     }
 }

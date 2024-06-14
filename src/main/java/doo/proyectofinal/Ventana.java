@@ -7,7 +7,7 @@ public class Ventana extends JFrame {
         this.setLayout(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setBounds(0,0,1000,1000);
-        Panel panel = new Panel();
+        Panel_Fecha panel = new Panel_Fecha();
         this.add(panel);
         this.setVisible(true);
     }

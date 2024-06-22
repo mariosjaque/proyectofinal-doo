@@ -9,10 +9,18 @@ public class Bus {
 
     public Bus(int tipoBus, Date horaSalida){
         horarioBus = horaSalida;
-
+        modeloBus = modelosBus.values()[tipoBus];
+        for(int i=0;i<modeloBus.getNumeroAsientos();i++){
+            Asiento asiento = new Asiento(i+1);
+            Asientos.add(asiento);
+        }
     }
 
     public Date getHorarioBus() {
         return horarioBus;
+    }
+
+    public modelosBus getModeloBus() {
+        return modeloBus;
     }
 }

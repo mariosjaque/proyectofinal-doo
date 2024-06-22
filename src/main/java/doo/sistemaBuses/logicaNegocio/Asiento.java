@@ -1,4 +1,4 @@
-package doo.proyectofinal;
+package doo.sistemaBuses.logicaNegocio;
 
 public class Asiento {
     private int numero;

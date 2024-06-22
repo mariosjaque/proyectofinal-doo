@@ -1,4 +1,7 @@
-package doo.proyectofinal;
+package doo.sistemaBuses.logicaNegocio;
+import doo.sistemaBuses.logicaNegocio.Asiento;
+import doo.sistemaBuses.logicaNegocio.modelosBus;
+
 import java.util.ArrayList;
 import java.util.Date;
 

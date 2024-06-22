@@ -1,4 +1,4 @@
-package doo.proyectofinal;
+package doo.sistemaBuses.logicaNegocio;
 
 public enum modelosBus {
     InterurbanoSimple(1,7),

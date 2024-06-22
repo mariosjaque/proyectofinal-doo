@@ -1,4 +1,4 @@
-package doo.proyectofinal;
+package doo.sistemaBuses.interfazGrafica;
 import javax.swing.JFrame;
 
 public class Ventana extends JFrame {

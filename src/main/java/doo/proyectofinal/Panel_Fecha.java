@@ -1,5 +1,6 @@
 package doo.proyectofinal;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -16,16 +17,18 @@ public class Panel_Fecha extends JPanel{
         this.setLayout(null);
 
         JTextField texto = new JTextField();
-        JLabel print = new JLabel();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+        JLabel print = new JLabel("Ingresa la fecha de salida de bus: (dia/mes/año)");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendario = Calendar.getInstance();
 
         this.add(texto);
         this.add(print);
 
+        print.setForeground(Color.white);
         //Fijar coordenadas
         this.setBounds(0,0,1000,1000);
-        texto.setBounds(0,0,200,50);
+        print.setBounds(0,0,500,100);
+        texto.setBounds(0,100,200,50);
 
         KeyAdapter Enter = new KeyAdapter() {
             @Override

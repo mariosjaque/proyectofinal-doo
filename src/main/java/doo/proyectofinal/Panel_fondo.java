@@ -21,7 +21,7 @@ public class Panel_fondo extends JPanel{
 
         panel_asientos = new Panel_Asientos();
         panel_buses = new Panel_Buses();
-        panel_fecha = new Panel_Fecha();
+        panel_fecha = new Panel_Fecha(this);
         panel_Compra = new Panel_Compra();
         panel_Pasajes = new Panel_pasajes();
 
@@ -51,12 +51,7 @@ public class Panel_fondo extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(posicion<3){
-                    if(posicion==0){
-                        posicion=+1;
-                        panel_fecha.setVisible(false);
-                        panel_buses.setVisible(true);
-                    }
-                    else if(posicion == 1){
+                    if(posicion == 1){
                         posicion +=1;
                         panel_buses.setVisible(false);
                         panel_asientos.setVisible(true);
@@ -72,5 +67,13 @@ public class Panel_fondo extends JPanel{
 
         siguiente.addActionListener(Avanzar);
 
+
+
+    }
+    public void salir_panel_fecha(){
+
+        posicion=+1;
+        panel_fecha.setVisible(false);
+        panel_buses.setVisible(true);
     }
 }

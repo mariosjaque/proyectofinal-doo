@@ -1,4 +1,7 @@
 package doo.sistemaBuses.interfazGrafica;
+import doo.sistemaBuses.logicaNegocio.*;
+import java.util.Date;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +21,9 @@ public class Panel_fondo extends JPanel{
         this.setBounds(0,0,1000,1000);
         this.setLayout(null);
 
-        panel_asientos = new Panel_Asientos();
+        Date currentDate = new Date();
+        Bus bus = new Bus(1, 2, currentDate);
+        panel_asientos = new Panel_Asientos(bus);
         panel_buses = new Panel_Buses();
         panel_fecha = new Panel_Fecha(this);
         panel_Compra = new Panel_Compra();
@@ -73,6 +78,6 @@ public class Panel_fondo extends JPanel{
 
         posicion=+1;
         panel_fecha.setVisible(false);
-        panel_buses.setVisible(true);
+        panel_asientos.setVisible(true);
     }
 }

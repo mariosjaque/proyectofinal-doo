@@ -8,11 +8,14 @@ import java.util.Date;
 public class Bus {
     private Date horarioBus;
     private modelosBus modeloBus;
+    private int patenteBus;
     private ArrayList<Asiento> Asientos;
 
-    public Bus(int tipoBus, Date horaSalida){
+    public Bus(int tipoBus, int patente, Date horaSalida){
         horarioBus = horaSalida;
+        patenteBus = patente;
         modeloBus = modelosBus.values()[tipoBus];
+        Asientos = new ArrayList<>();
         for(int i=0;i<modeloBus.getNumeroAsientos();i++){
             Asiento asiento = new Asiento(i+1);
             Asientos.add(asiento);
@@ -25,5 +28,9 @@ public class Bus {
 
     public modelosBus getModeloBus() {
         return modeloBus;
+    }
+
+    public ArrayList<Asiento> getAsientos(){
+        return Asientos;
     }
 }

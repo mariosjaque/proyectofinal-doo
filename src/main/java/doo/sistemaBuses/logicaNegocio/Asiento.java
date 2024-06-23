@@ -5,19 +5,19 @@ import java.awt.*;
 
 public class Asiento {
     private int numero;
-    private boolean vendido;
+    private boolean reservado;
     ImageIcon grafico;
 
     public Asiento(int num){
         numero = num;
-        vendido = false;
+        reservado = false;
     }
     public int getNumero() {
         return numero;
     }
 
     public JButton asientoGrafico() {
-        if(vendido!=true){
+        if(reservado!=true){
             grafico = new ImageIcon(getClass().getResource("/asiento_disponible.png"));
         } else {
             grafico = new ImageIcon(getClass().getResource("/asiento_comprado.png"));
@@ -30,10 +30,14 @@ public class Asiento {
         return jb;
     }
 
+    public boolean isReservado() {
+        return reservado;
+    }
+
     public boolean compraAsiento(){
-        if(vendido!=true) {
-            vendido = true;
+        if(reservado!=true) {
+            reservado = true;
         }
-        return vendido;
+        return reservado;
     }
 }

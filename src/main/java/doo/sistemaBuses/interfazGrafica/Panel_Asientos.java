@@ -20,8 +20,9 @@ public class Panel_Asientos extends JPanel {
         int asientosPorPiso = 4*filasPorPiso;
 
         for(int i=0;i<cantidadPisos;i++){
-            for(int j=0;j<filasPorPiso;j++) {
-                for (int k = j * 4; k < (j + 1) * 4; k++) {
+            for(int j=1;j<=filasPorPiso;j++) {
+                int x = 0;
+                for (int k=(4*j)-4; k<4*j; k++) {
                     Asiento asiento = bus.getAsientos().get(k);
                     JButton asientoBtn = asiento.asientoGrafico();
                     int finalK = k;
@@ -33,7 +34,8 @@ public class Panel_Asientos extends JPanel {
                         }
                     };
                     asientoBtn.addActionListener(oyente);
-                    asientoBtn.setBounds(90+(30*j), 210+(50*i), 50, 50);
+                    asientoBtn.setBounds(90+(50*x), 210+(50*j), 50, 50);
+                    if(x==1){x+=3;}else{x+=1;}
                     this.add(asientoBtn);
                 }
             }

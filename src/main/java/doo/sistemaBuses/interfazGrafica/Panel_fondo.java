@@ -1,6 +1,7 @@
 package doo.sistemaBuses.interfazGrafica;
 import doo.sistemaBuses.logicaNegocio.*;
 import java.util.Date;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class Panel_fondo extends JPanel{
     Panel_Asientos panel_asientos;
     Panel_Buses panel_buses;
     Panel_Fecha panel_fecha;
-    Panel_Compra panel_Compra;
+    ArrayList<JPanel> Paneles;
     Panel_pasajes panel_Pasajes;
     private int posicion = 0;
 
@@ -21,63 +22,42 @@ public class Panel_fondo extends JPanel{
         this.setBounds(0,0,1000,1000);
         this.setLayout(null);
 
-        Date currentDate = new Date();
-        Bus bus = new Bus(1, 2, currentDate);
-        panel_asientos = new Panel_Asientos(bus);
-        panel_buses = new Panel_Buses();
+        Paneles = new ArrayList<>();
+        panel_buses = new Panel_Buses(this);
         panel_fecha = new Panel_Fecha(this);
-        panel_Compra = new Panel_Compra();
         panel_Pasajes = new Panel_pasajes();
 
-        panel_asientos.setBackground(Color.BLACK);
         panel_buses.setBackground(Color.magenta);
         panel_fecha.setBackground(Color.blue);
-        panel_Compra.setBackground(Color.cyan);
 
-        this.add(panel_asientos);
+
         this.add(panel_buses);
-        this.add(panel_Compra);
         this.add(panel_fecha);
         this.add(panel_Pasajes);
 
         panel_fecha.setVisible(true);
-        panel_asientos.setVisible(false);
-        panel_Compra.setVisible(false);
         panel_Pasajes.setVisible(false);
         panel_buses.setVisible(false);
 
-        JButton siguiente = new JButton();
-        JButton retroceder = new JButton();
-        siguiente.setBounds(0,0,100,100);
-        this.add(siguiente);
-
-        ActionListener Avanzar = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(posicion<3){
-                    if(posicion == 1){
-                        posicion +=1;
-                        panel_buses.setVisible(false);
-                        panel_asientos.setVisible(true);
-                    }
-                    else if(posicion == 2){
-                        posicion +=1;
-                        panel_asientos.setVisible(false);
-                        panel_Compra.setVisible(true);
-                    }
-                }
-            }
-        };
-
-        siguiente.addActionListener(Avanzar);
-
-
-
     }
+
+    public void avanzaPanel(JPanel jp1, JPanel jp2){
+        Paneles.add(jp1);
+        this.add(jp1);
+        jp1.setVisible(true);
+        jp2.setVisible(false);
+    }
+
+    public void retrocedePanel(JPanel jp){
+        Paneles.removeLast();
+        jp.setVisible(false);
+        Paneles.getLast().setVisible(true);
+    }
+
     public void salir_panel_fecha(){
 
         posicion=+1;
         panel_fecha.setVisible(false);
-        panel_asientos.setVisible(true);
+        panel_buses.setVisible(true);
     }
 }

@@ -16,7 +16,7 @@ public class Panel_Compra extends JPanel {
 
         JButton retroceder = new JButton("Anterior");
         this.add(retroceder);
-        retroceder.setBounds(0,800,100,100);
+        retroceder.setBounds(0,750,100,50);
 
         ActionListener Retroceder = new ActionListener() {
             @Override

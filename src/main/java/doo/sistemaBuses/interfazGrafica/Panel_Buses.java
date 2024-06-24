@@ -24,8 +24,8 @@ public class Panel_Buses extends JPanel {
         JButton retroceder = new JButton("Anterior");
         this.add(siguiente);
         this.add(retroceder);
-        siguiente.setBounds(100,800,100,100);
-        retroceder.setBounds(0,800,100,100);
+        siguiente.setBounds(100,750,100,50);
+        retroceder.setBounds(0,750,100,50);
         ActionListener Avanzar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

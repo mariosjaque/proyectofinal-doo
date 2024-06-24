@@ -20,8 +20,8 @@ public class Panel_Asientos extends JPanel {
         JButton retroceder = new JButton("Anterior");
         this.add(siguiente);
         this.add(retroceder);
-        siguiente.setBounds(100,800,100,100);
-        retroceder.setBounds(0,800,100,100);
+        siguiente.setBounds(100,750,100,50);
+        retroceder.setBounds(0,750,100,50);
         ActionListener Avanzar = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,7 +38,7 @@ public class Panel_Asientos extends JPanel {
         ActionListener Retroceder = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //fondo.retrocedePanel(Panel_Asientos.this);
+                fondo.retrocedePanel(Panel_Asientos.this);
             }
         };
 

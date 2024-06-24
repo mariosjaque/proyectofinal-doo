@@ -24,6 +24,7 @@ public class Panel_fondo extends JPanel{
 
         Paneles = new ArrayList<>();
         panel_buses = new Panel_Buses(this);
+        Paneles.add(panel_buses);
         panel_fecha = new Panel_Fecha(this);
         panel_Pasajes = new Panel_pasajes();
 

@@ -5,7 +5,7 @@ import doo.sistemaBuses.logicaNegocio.modelosBus;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Bus {
+public abstract class Bus {
     private Date horarioBus;
     private modelosBus modeloBus;
     private int patenteBus;
@@ -14,8 +14,8 @@ public class Bus {
     public Bus(int tipoBus, int patente, Date horaSalida){
         horarioBus = horaSalida;
         patenteBus = patente;
-        modeloBus = modelosBus.values()[tipoBus];
         Asientos = new ArrayList<>();
+        modeloBus = modelosBus.values()[tipoBus];
         for(int i=0;i<modeloBus.getNumeroAsientos();i++){
             Asiento asiento = new Asiento(i+1);
             Asientos.add(asiento);

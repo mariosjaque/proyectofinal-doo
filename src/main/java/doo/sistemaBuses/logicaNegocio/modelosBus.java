@@ -1,8 +1,8 @@
 package doo.sistemaBuses.logicaNegocio;
 
 public enum modelosBus {
-    InterurbanoSimple(1,7),
-    InterurbanoLargaDistancia(2,10);
+    SalonCama(1,7),
+    SemiCama(2,10);
 
     private final int numeroPisos;
     private final int filasPorPiso;

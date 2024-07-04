@@ -1,6 +1,6 @@
 package doo.sistemaBuses.interfazGrafica;
 
-import doo.sistemaBuses.logicaNegocio.Bus;
+import doo.sistemaBuses.logicaNegocio.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ public class Panel_Buses extends JPanel {
 
         // Test
         Date currentDate = new Date();
-        bus_seleccionado = new Bus(1, 2, currentDate);
+        bus_seleccionado = new SalonCama(1, currentDate);
 
         JButton siguiente = new JButton("Siguiente");
         JButton retroceder = new JButton("Anterior");

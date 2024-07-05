@@ -1,9 +1,10 @@
 package doo.sistemaBuses.interfazGrafica;
 import javax.swing.JFrame;
+import java.text.ParseException;
 
 public class Ventana extends JFrame {
     Panel_fondo panel_fondo;
-    public Ventana(){
+    public Ventana() throws ParseException {
         super();
         panel_fondo = new Panel_fondo();
         panel_fondo.setVisible(true);

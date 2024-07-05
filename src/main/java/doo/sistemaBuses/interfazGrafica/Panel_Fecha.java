@@ -9,8 +9,11 @@ import java.util.Date;
 import java.util.Calendar;
 
 public class Panel_Fecha extends JPanel{
+    int verificador=1;
 
-    public Panel_Fecha(Panel_fondo panel_fondo){
+
+
+    public Panel_Fecha(Panel_fondo panel_fondo) throws ParseException {
 
         this.setLayout(null);
 
@@ -18,6 +21,7 @@ public class Panel_Fecha extends JPanel{
         JLabel print = new JLabel("Ingresa la fecha de salida de bus: (dia/mes/año)");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendario = Calendar.getInstance();
+        Date Fecha_inicio = formato.parse("8/7/2024");
 
         this.add(texto);
         this.add(print);
@@ -37,7 +41,19 @@ public class Panel_Fecha extends JPanel{
                     try {
                         Date fecha = new Date();
                         fecha = formato.parse(texto.getText());
-                        panel_fondo.salir_panel_fecha();
+                        for(int i=0;i<=14;i++){
+                            if(fecha.equals(Panel_Fecha.this.variarFecha(Fecha_inicio,i))){
+                                panel_fondo.setfecha(fecha);
+                                panel_fondo.salir_panel_fecha();
+                                verificador=0;
+                                break;
+                            }
+                        }
+                        if(verificador !=0){
+                            JOptionPane.showMessageDialog(null,"Se ha seleccionado una fecha incorrecta");
+                        }
+
+
 
                     } catch (ParseException ex) {
                         JOptionPane.showMessageDialog(null,"Se ha seleccionado una fecha incorrecta");
@@ -49,5 +65,15 @@ public class Panel_Fecha extends JPanel{
         };
         texto.addKeyListener(Enter);
 
+
+
+
+    }
+    public Date variarFecha(Date fecha, int valor){
+        if (valor==0) return fecha;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_YEAR, valor);
+        return calendar.getTime();
     }
 }

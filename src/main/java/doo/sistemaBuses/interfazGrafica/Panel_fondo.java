@@ -1,5 +1,7 @@
 package doo.sistemaBuses.interfazGrafica;
 import doo.sistemaBuses.logicaNegocio.*;
+
+import java.text.ParseException;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -15,9 +17,10 @@ public class Panel_fondo extends JPanel{
     ArrayList<JPanel> Paneles;
     Panel_pasajes panel_Pasajes;
     private int posicion = 0;
+    private Date Fecha;
 
 
-    public Panel_fondo(){
+    public Panel_fondo() throws ParseException {
 
         this.setBounds(0,0,1000,1000);
         this.setLayout(null);
@@ -30,6 +33,7 @@ public class Panel_fondo extends JPanel{
 
         panel_buses.setBackground(Color.magenta);
         panel_fecha.setBackground(Color.blue);
+        panel_Pasajes.setBackground(Color.yellow);
 
 
         this.add(panel_buses);
@@ -58,7 +62,17 @@ public class Panel_fondo extends JPanel{
     public void salir_panel_fecha(){
 
         posicion=+1;
+        panel_buses.generar_titulo(this);
+        posicion=+1;
         panel_fecha.setVisible(false);
         panel_buses.setVisible(true);
+
+    }
+
+    public void setfecha(Date fecha){
+        Fecha = fecha;
+    }
+    public Date getfecha(){
+        return Fecha;
     }
 }

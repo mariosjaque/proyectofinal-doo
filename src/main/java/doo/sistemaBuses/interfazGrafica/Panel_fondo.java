@@ -2,6 +2,8 @@ package doo.sistemaBuses.interfazGrafica;
 import doo.sistemaBuses.logicaNegocio.*;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -18,6 +20,7 @@ public class Panel_fondo extends JPanel{
     Panel_pasajes panel_Pasajes;
     private int posicion = 0;
     private Date Fecha;
+    private Date Fecha_inicio;
 
 
     public Panel_fondo() throws ParseException {
@@ -44,6 +47,18 @@ public class Panel_fondo extends JPanel{
         panel_Pasajes.setVisible(false);
         panel_buses.setVisible(false);
 
+        Date currentDate = new Date();
+        ArrayList<Pasaje> pasajes = new ArrayList<Pasaje>();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Fecha_inicio = formato.parse("8/7/2024");
+        for(int i=0;i<=14;i++){
+            Pasaje pasaje = new Pasaje();
+            pasaje.setBus(new SalonCama(1,currentDate));
+            pasajes.add(pasaje);
+            pasajes.get(i).asignar_fecha_bus(Fecha_inicio);
+            Fecha_inicio = this.variarFecha(Fecha_inicio,i);
+        }
+
     }
 
     public void avanzaPanel(JPanel jp1, JPanel jp2){
@@ -63,7 +78,6 @@ public class Panel_fondo extends JPanel{
 
         posicion=+1;
         panel_buses.generar_titulo(this);
-        posicion=+1;
         panel_fecha.setVisible(false);
         panel_buses.setVisible(true);
 
@@ -74,5 +88,13 @@ public class Panel_fondo extends JPanel{
     }
     public Date getfecha(){
         return Fecha;
+    }
+
+    public Date variarFecha(Date fecha, int valor){
+        if (valor==0) return fecha;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_YEAR, valor);
+        return calendar.getTime();
     }
 }

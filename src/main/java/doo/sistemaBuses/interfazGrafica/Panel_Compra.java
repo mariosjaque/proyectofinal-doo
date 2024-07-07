@@ -362,44 +362,6 @@ public class Panel_Compra extends JPanel {
         }
     }
 
-
-    private class SubmitActionListener implements ActionListener {
-        private String tipoTarjeta;
-
-        public SubmitActionListener(String tipoTarjeta) {
-            this.tipoTarjeta = tipoTarjeta;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                long numeroTarjeta = Long.parseLong(textoTarjeta.getText());
-                int cvv_tarjeta = Integer.parseInt(textoCVV.getText());
-                String nombreTitular = textoNombre.getText();
-
-                ValidadorPago validador = new ValidadorPago(tipoTarjeta, numeroTarjeta, cvv_tarjeta, nombreTitular);
-                if (validador.validar()) {
-                    JOptionPane.showMessageDialog(Panel_Compra.this, "Pago realizado con éxito");
-
-                    // probando la implementacion
-                    int numeroAsiento = 12; // Ejemplo
-                    String nombrePasajero = "Juan Pérez"; // Ejemplo
-                    String horarioFechaSalida = "2024-07-10 08:00 AM"; // Ejemplo
-                    ArrayList<Pasaje> pasajes = new ArrayList<>();
-                    Pasaje pasaje = new Pasaje(bus, numeroAsiento, nombrePasajero, horarioFechaSalida);
-                    pasajes.add(pasaje);
-
-                    cambiarAPanelPasaje(pasajes);
-                } else {
-                    throw new Exception("Validación fallida");
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(Panel_Compra.this, "Error en el pago: " + ex.getMessage());
-            }
-        }
-
-
-    }
     // Clase ValidadorPago ya se encuentra casi en la etapa final
     public class ValidadorPago {
         private String cardType;

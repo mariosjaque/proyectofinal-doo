@@ -4,61 +4,43 @@ import doo.sistemaBuses.logicaNegocio.Bus;
 import doo.sistemaBuses.interfazGrafica.Pasaje;
 
 import doo.sistemaBuses.interfazGrafica.Panel_Compra;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import com.itextpdf.text.DocumentException;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class Panel_pasajes extends JPanel {
-    private Pasaje pasaje;
+    private ArrayList<Pasaje> pasajes;
 
-    public Panel_pasajes(Pasaje pasaje) {
-        this.pasaje = pasaje;
+    public Panel_pasajes(ArrayList<Pasaje> pasajes) {
+        this.pasajes = pasajes;
         this.setLayout(null);
         this.setBounds(0, 0, 1000, 1000);
 
-        JLabel infoLabel = new JLabel("Información del Pasaje");
-        this.add(infoLabel);
-        infoLabel.setBounds(0, 0, 500, 100);
-        infoLabel.setForeground(Color.white);
+        JButton descargarPDF = new JButton("Descargar PDF");
+        descargarPDF.setBounds(400, 750, 200, 50);
+        this.add(descargarPDF);
+        descargarPDF.addActionListener(e -> Pasaje.generarPDF(pasajes));
 
-        JLabel busLabel = new JLabel("Bus: " + pasaje.getBus()); //editar aqui luego -->
-        this.add(busLabel);
-        busLabel.setBounds(0, 100, 500, 50);
-        busLabel.setForeground(Color.white);
+        JLabel detalles = new JLabel("Detalles de los Pasajes:");
+        detalles.setForeground(Color.white);
+        detalles.setFont(new Font("Arial", Font.BOLD, 16));
+        detalles.setBounds(20, 20, 300, 30);
+        this.add(detalles);
 
-        JLabel asientoLabel = new JLabel("Número de Asiento: " + pasaje.getNumeroAsiento());
-        this.add(asientoLabel);
-        asientoLabel.setBounds(0, 150, 500, 50);
-        asientoLabel.setForeground(Color.white);
+        StringBuilder info = new StringBuilder("<html>");
+        for (Pasaje pasaje : pasajes) {
+            info.append("Bus: ").append(pasaje.getBus().getModeloBus().SalonCama)
+                    .append(", Asiento: ").append(pasaje.getNumeroAsiento())
+                    .append(", Pasajero: ").append(pasaje.getNombrePasajero())
+                    .append(", Fecha y Hora de Salida: ").append(pasaje.getHorarioFechaSalida())
+                    .append("<br>");
+        }
+        info.append("</html>");
 
-        JLabel pasajeroLabel = new JLabel("Nombre del Pasajero: " + pasaje.getNombrePasajero());
-        this.add(pasajeroLabel);
-        pasajeroLabel.setBounds(0, 200, 500, 50);
-        pasajeroLabel.setForeground(Color.white);
-
-        JLabel horarioLabel = new JLabel("Horario y Fecha de Salida: " + pasaje.getHorarioFechaSalida());
-        this.add(horarioLabel);
-        horarioLabel.setBounds(0, 250, 500, 50);
-        horarioLabel.setForeground(Color.white);
-
-        JButton downloadButton = new JButton("Descargar PDF");
-        this.add(downloadButton);
-        downloadButton.setBounds(0, 300, 200, 50);
-        downloadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    pasaje.generarPDF("pasaje.pdf");
-                    JOptionPane.showMessageDialog(Panel_pasajes.this, "PDF generado exitosamente");
-                } catch (FileNotFoundException | DocumentException ex) {
-                    JOptionPane.showMessageDialog(Panel_pasajes.this, "Error al generar PDF: " + ex.getMessage());
-                }
-            }
-        });
+        JLabel pasajeInfo = new JLabel(info.toString());
+        pasajeInfo.setForeground(Color.white);
+        pasajeInfo.setBounds(20, 60, 960, 600);
+        this.add(pasajeInfo);
     }
 
     @Override

@@ -140,4 +140,37 @@ public class Panel_Compra extends JPanel {
             mostrarFormularioTarjeta("Crédito");
         }
     }
+    private class SubmitActionListener implements ActionListener {
+        private String tipoTarjeta;
+
+        public SubmitActionListener(String tipoTarjeta) {
+            this.tipoTarjeta = tipoTarjeta;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                long numeroTarjeta = Long.parseLong(textoTarjeta.getText());
+                int cvv_tarjeta = Integer.parseInt(textoCVV.getText());
+                String nombreTitular = textoNombre.getText();
+
+                ValidadorPago validador = new ValidadorPago(tipoTarjeta, numeroTarjeta, cvv_tarjeta, nombreTitular);
+                if (validador.validar()) {
+                    JOptionPane.showMessageDialog(Panel_Compra.this, "Pago realizado con éxito");
+
+                    // Aquí se supone que ya tienes las instancias de Bus, Asiento, Pasajero y Horario
+                    int numeroAsiento = 12; // Ejemplo
+                    String nombrePasajero = "Juan Pérez"; // Ejemplo
+                    String horarioFechaSalida = "2024-07-10 08:00 AM"; // Ejemplo
+
+                    Pasaje pasaje = new Pasaje(bus, numeroAsiento, nombrePasajero, horarioFechaSalida);
+                    cambiarAPanelPasaje(pasaje);
+                } else {
+                    throw new Exception("Validación fallida");
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(Panel_Compra.this, "Error en el pago: " + ex.getMessage());
+            }
+        }
+    }
 }

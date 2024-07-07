@@ -16,7 +16,6 @@ public class Panel_Buses extends JPanel {
 
     private Bus bus_seleccionado;
 
-
     public Panel_Buses(Panel_fondo fondo) throws ParseException {
         this.setLayout(null);
         this.setBounds(0,0,1000,1000);
@@ -24,6 +23,13 @@ public class Panel_Buses extends JPanel {
         // Test
         Date currentDate = new Date();
         bus_seleccionado = new SalonCama(1, currentDate);
+
+        SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = simple.format(fondo.getfecha());
+        JLabel Titulo = new JLabel("Pasajes del dia "+fecha);
+        Titulo.setFont(new Font("Serif",Font.BOLD,20));
+        this.add(Titulo);
+        Titulo.setBounds(300,0,400,20);
 
         JButton siguiente = new JButton("Siguiente");
         JButton retroceder = new JButton("Anterior");
@@ -50,7 +56,7 @@ public class Panel_Buses extends JPanel {
         ActionListener Retroceder = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //fondo.retrocedePanel(Panel_Buses.this);
+                fondo.retrocedePanel(Panel_Buses.this);
             }
         };
 
@@ -58,13 +64,11 @@ public class Panel_Buses extends JPanel {
         retroceder.addActionListener(Retroceder);
 
     }
-    public void generar_titulo(Panel_fondo fondo){
-        SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha = simple.format(fondo.getfecha());
-        JLabel Titulo = new JLabel("Pasajes del dia "+fecha);
-        Titulo.setFont(new Font("Serif",Font.BOLD,20));
-        this.add(Titulo);
-        Titulo.setBounds(300,0,400,20);
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.setColor(Color.magenta);
+        g.fillRect(0,0,1000,1000);
     }
 
 }

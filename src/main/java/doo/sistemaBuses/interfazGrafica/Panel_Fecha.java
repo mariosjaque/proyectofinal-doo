@@ -39,12 +39,13 @@ public class Panel_Fecha extends JPanel{
                 int tecla_presionada = e.getKeyCode();
                 if(tecla_presionada == KeyEvent.VK_ENTER){
                     try {
-                        Date fecha = new Date();
+                        Date fecha;
                         fecha = formato.parse(texto.getText());
                         for(int i=0;i<=14;i++){
                             if(fecha.equals(Panel_Fecha.this.variarFecha(Fecha_inicio,i))){
                                 panel_fondo.setfecha(fecha);
-                                panel_fondo.salir_panel_fecha();
+                                Panel_Buses panelBuses = new Panel_Buses(panel_fondo);
+                                panel_fondo.avanzaPanel(panelBuses, Panel_Fecha.this);
                                 verificador=0;
                                 break;
                             }

@@ -13,14 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Panel_fondo extends JPanel{
-    Panel_Asientos panel_asientos;
-    Panel_Buses panel_buses;
     Panel_Fecha panel_fecha;
     ArrayList<JPanel> Paneles;
     Panel_pasajes panel_Pasajes;
-    private int posicion = 0;
     private Date Fecha;
-    private Date Fecha_inicio;
 
 
     public Panel_fondo() throws ParseException {
@@ -29,23 +25,19 @@ public class Panel_fondo extends JPanel{
         this.setLayout(null);
 
         Paneles = new ArrayList<>();
-        panel_buses = new Panel_Buses(this);
-        Paneles.add(panel_buses);
         panel_fecha = new Panel_Fecha(this);
+        Paneles.add(panel_fecha);
         panel_Pasajes = new Panel_pasajes();
 
-        panel_buses.setBackground(Color.magenta);
         panel_fecha.setBackground(Color.blue);
         panel_Pasajes.setBackground(Color.yellow);
 
 
-        this.add(panel_buses);
         this.add(panel_fecha);
         this.add(panel_Pasajes);
 
         panel_fecha.setVisible(true);
         panel_Pasajes.setVisible(false);
-        panel_buses.setVisible(false);
 
 
     }
@@ -61,15 +53,6 @@ public class Panel_fondo extends JPanel{
         Paneles.removeLast();
         jp.setVisible(false);
         Paneles.getLast().setVisible(true);
-    }
-
-    public void salir_panel_fecha(){
-
-        posicion=+1;
-        panel_buses.generar_titulo(this);
-        panel_fecha.setVisible(false);
-        panel_buses.setVisible(true);
-
     }
 
     public void setfecha(Date fecha){

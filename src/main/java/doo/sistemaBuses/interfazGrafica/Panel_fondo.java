@@ -14,9 +14,9 @@ import java.awt.event.ActionListener;
 
 public class Panel_fondo extends JPanel{
     private static Panel_fondo panel_fondo = new Panel_fondo();
-    Panel_Fecha panel_fecha;
-    ArrayList<JPanel> Paneles;
-    Panel_pasajes panel_Pasajes;
+    private Panel_Fecha panel_fecha;
+    private ArrayList<JPanel> Paneles;
+    private Panel_pasajes panel_Pasajes;
     private Date Fecha;
 
 

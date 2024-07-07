@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Calendar;
 
 public class Panel_Fecha extends JPanel{
-    int verificador=1;
+    private int verificador=1;
 
 
 

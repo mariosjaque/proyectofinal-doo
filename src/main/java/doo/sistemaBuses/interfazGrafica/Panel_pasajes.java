@@ -14,6 +14,10 @@ public class Panel_pasajes extends JPanel {
     public Panel_pasajes(ArrayList<Pasaje> pasajes, Panel_fondo panelFondo) {
         this.pasajes = pasajes;
         this.setLayout(null);
+        ImageIcon imagen_fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
+        JLabel Fondo = new JLabel();
+        Fondo.setIcon(new ImageIcon(imagen_fondo.getImage().getScaledInstance(1000,1000,Image.SCALE_SMOOTH)));
+        this.add(Fondo);
         this.setBounds(0, 0, 1000, 1000);
         this.setBackground(new Color(30, 30, 30));
         fondo = panelFondo;

@@ -15,6 +15,11 @@ public class Panel_Asientos extends JPanel {
     public Panel_Asientos(Panel_fondo fondo, Bus bus){
         this.setLayout(null);
         this.setBounds(0,0,1000,1000);
+        ImageIcon imagen_fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
+        JLabel Fondo = new JLabel();
+        Fondo.setIcon(new ImageIcon(imagen_fondo.getImage().getScaledInstance(1000,1000,Image.SCALE_SMOOTH)));
+        Fondo.setBounds(0,0,1000,1000);
+
 
         JButton siguiente = new JButton("Siguiente");
         JButton retroceder = new JButton("Anterior");
@@ -33,7 +38,6 @@ public class Panel_Asientos extends JPanel {
                     JOptionPane.showMessageDialog(null, "No se puede avanzar sin un asiento seleccionado.");
                 } else {
                     Panel_Compra panelCompra = new Panel_Compra(fondo, bus, asientosPendientes);
-                    panelCompra.setBackground(Color.cyan);
                     fondo.avanzaPanel(panelCompra, Panel_Asientos.this);
                 }
             }
@@ -84,6 +88,7 @@ public class Panel_Asientos extends JPanel {
                 }
             }
         }
+        this.add(Fondo);
 
 
     }
@@ -117,7 +122,5 @@ public class Panel_Asientos extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.black);
-        g.fillRect(0,0,1000,1000);
     }
 }

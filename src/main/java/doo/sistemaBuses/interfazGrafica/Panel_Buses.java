@@ -27,6 +27,13 @@ public class Panel_Buses extends JPanel {
         this.setBounds(0,0,1000,1000);
 
         terminal = fondo.getTerminalBus();
+        ImageIcon imagen_fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
+        JLabel Fondo = new JLabel();
+        Fondo.setIcon(new ImageIcon(imagen_fondo.getImage().getScaledInstance(1000,1000,Image.SCALE_SMOOTH)));
+        Fondo.setBounds(0,0,1000,1000);
+
+
+
 
         SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
         String fecha = simple.format(fondo.getfecha());
@@ -102,7 +109,6 @@ public class Panel_Buses extends JPanel {
                     JOptionPane.showMessageDialog(null, "No se puede avanzar sin un bus seleccionado.");
                 } else {
                     Panel_Asientos panelAsientos = new Panel_Asientos(fondo, bus_seleccionado);
-                    panelAsientos.setBackground(Color.BLACK);
                     fondo.avanzaPanel(panelAsientos, Panel_Buses.this);
                 }
             }
@@ -122,6 +128,7 @@ public class Panel_Buses extends JPanel {
 
         siguiente.addActionListener(Avanzar);
         retroceder.addActionListener(Retroceder);
+        this.add(Fondo);
 
 
 
@@ -169,7 +176,5 @@ public class Panel_Buses extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.magenta);
-        g.fillRect(0,0,1000,1000);
     }
 }

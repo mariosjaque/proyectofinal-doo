@@ -15,23 +15,41 @@ public class Panel_Fecha extends JPanel{
     private int verificador=1;
 
     public Panel_Fecha(Panel_fondo panel_fondo,Date Fecha_inicio){
-
         this.setLayout(null);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         JTextField texto = new JTextField();
-        JLabel print = new JLabel("Ingresa la fecha de salida de bus: (dia/mes/año)");
+        JLabel print = new JLabel("Ingrese la fecha en la que desea que salga el bus, con el siguiente formato:(dia/mes/año) y presione enter,");
+        JLabel print2 = new JLabel( "tambien debe elegir una fecha desde la que abrio el programa hasta pasada 2 semanas.");
+        JLabel Bienvenidos = new JLabel();
+        ImageIcon bienvenido = new ImageIcon(getClass().getResource("/bienvenido.png"));
+        Bienvenidos.setIcon(new ImageIcon(bienvenido.getImage().getScaledInstance(400,200,Image.SCALE_SMOOTH)));
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
+        JLabel Fondo = new JLabel();
+        Fondo.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(1000,1000,Image.SCALE_SMOOTH)));
+        print.setFont(new Font("Serif",Font.BOLD,16));
+        print2.setFont(new Font("Serif",Font.BOLD,16));
 
 
 
-
-        this.add(texto);
-        this.add(print);
 
         print.setForeground(Color.white);
         //Fijar coordenadas
         this.setBounds(0,0,1000,1000);
-        print.setBounds(0,0,500,100);
-        texto.setBounds(0,100,200,50);
+        print.setBounds(30,250,800,50);
+        print2.setBounds(30,270,800,50);
+        texto.setBounds(400,400,200,50);
+        Bienvenidos.setBounds(300,0,400,200);
+        Fondo.setBounds(0,0,1000,1000);
+
+
+        print.setForeground(Color.black);
+        print2.setForeground(Color.black);
+
+        this.add(texto);
+        this.add(print);
+        this.add(print2);
+        this.add(Bienvenidos);
+        this.add(Fondo);
 
         KeyAdapter Enter = new KeyAdapter() {
             @Override
@@ -79,4 +97,5 @@ public class Panel_Fecha extends JPanel{
         calendar.add(Calendar.DAY_OF_YEAR, valor);
         return calendar.getTime();
     }
+
 }

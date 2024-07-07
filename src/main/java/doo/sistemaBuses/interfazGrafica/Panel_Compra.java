@@ -26,6 +26,10 @@ public class Panel_Compra extends JPanel {
     private double totalPagar;
 
     public Panel_Compra(Panel_fondo fondo, Bus bus, ArrayList<Asiento> asientos) {
+        ImageIcon imagen_fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
+        JLabel Fondo = new JLabel();
+        Fondo.setIcon(new ImageIcon(imagen_fondo.getImage().getScaledInstance(1000,1000,Image.SCALE_SMOOTH)));
+        Fondo.setBounds(0,0,1000,1000);
         this.fondo = fondo;
         this.bus = bus;
         this.asientos = asientos;
@@ -114,6 +118,7 @@ public class Panel_Compra extends JPanel {
         JScrollPane scrollPane = new JScrollPane(areaAsientos);
         scrollPane.setBounds(650, 50, 300, 200);
         this.add(scrollPane);
+        this.add(Fondo);
     }
     public void getPrecio(double precio) {
         this.precio = precio * asientos.size();
@@ -345,8 +350,6 @@ public class Panel_Compra extends JPanel {
     //color de fondo
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.gray);
-        g.fillRect(0,0,1000,1000);
     }
     private class DebitoActionListener implements ActionListener {
         @Override

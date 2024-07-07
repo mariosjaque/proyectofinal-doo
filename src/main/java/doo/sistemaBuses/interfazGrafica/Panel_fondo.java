@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Panel_fondo extends JPanel{
     private static Panel_fondo panel_fondo = new Panel_fondo();
@@ -43,15 +41,14 @@ public class Panel_fondo extends JPanel{
         panel_Pasajes = new Panel_pasajes();
 
         panel_fecha.setBackground(Color.blue);
-        panel_Pasajes.setBackground(Color.yellow);
+        //panel_Pasajes.setBackground(Color.yellow);
 
 
         this.add(panel_fecha);
-        this.add(panel_Pasajes);
+        //this.add(panel_Pasajes);
 
         panel_fecha.setVisible(true);
-        panel_Pasajes.setVisible(false);
-
+        //panel_Pasajes.setVisible(false);
 
     }
 

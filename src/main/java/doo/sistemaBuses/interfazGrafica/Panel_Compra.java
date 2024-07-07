@@ -116,4 +116,15 @@ public class Panel_Compra extends JPanel {
         new Panel_Compra(new Panel_fondo());
     }
 
+    private void cambiarAPanelPasaje(Pasaje pasaje) {
+        fondo.avanzaPanel(new Panel_pasajes(pasaje));
+    }
+
+
+    //color de fondo
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.setColor(Color.gray);
+        g.fillRect(0,0,1000,1000);
+    }
 }

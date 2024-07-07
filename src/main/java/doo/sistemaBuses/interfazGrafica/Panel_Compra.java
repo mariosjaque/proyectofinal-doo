@@ -13,43 +13,106 @@ import java.util.logging.Logger;
 
 public class Panel_Compra extends JPanel {
     private JTextField textoTarjeta;
+    private ArrayList<Asiento> asientos;
     private Bus bus;
-    private JTextField textoCVV;
+    private JTextField textoCVV, textoEfectivo;
+    private JTextField textoMonto;
     private JTextField textoNombre;
     private Panel_fondo fondo;
-    public Panel_Compra(Panel_fondo fondo, Bus bus, ArrayList<Asiento> asientos){
+    private JLabel listaAsientosTXT;
+    private String tipo;
+    private double precio;
+
+    public Panel_Compra(Panel_fondo fondo, Bus bus, ArrayList<Asiento> asientos) {
+        this.fondo = fondo;
+        this.bus = bus;
+        this.asientos = asientos;
+
         this.setLayout(null);
-        this.setBounds(0,0,1000,1000);
-        //paneles de indicacion
+        this.setBounds(0, 0, 1000, 1000);
+
         JLabel printSeleccion = new JLabel("Selecciona tu tipo de tarjeta");
-        this.add(printSeleccion);
-        printSeleccion.setBounds(0, 0, 500, 100);
         printSeleccion.setForeground(Color.white);
+        printSeleccion.setFont(new Font("Arial", Font.BOLD, 16));
+        this.add(printSeleccion);
+        printSeleccion.setBounds(20, 20, 300, 30);
 
         JButton debito = new JButton("Débito");
         this.add(debito);
-        debito.setBounds(0,100,200,50);
+        debito.setBounds(20, 60, 150, 50);
+        debito.addActionListener(new DebitoActionListener());
 
         JButton credito = new JButton("Crédito");
         this.add(credito);
-        credito.setBounds(200,100,200,50);
+        credito.setBounds(180, 60, 150, 50);
+        credito.addActionListener(new CreditoActionListener());
+
+        JButton efectivo = new JButton("Efectivo");
+        this.add(efectivo);
+        efectivo.setBounds(340, 60, 150, 50);
+        efectivo.addActionListener(new EfectivoActionListener());
 
         JButton retroceder = new JButton("Anterior");
         this.add(retroceder);
-        retroceder.setBounds(0,750,150,50);
-
-        //action listener de debito y credito reducidas para mejor funcionamiento
-        debito.addActionListener(new DebitoActionListener());
-        credito.addActionListener(new CreditoActionListener());
-        ActionListener Retroceder = new ActionListener() {
+        retroceder.setBounds(20, 750, 150, 50);
+        retroceder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fondo.retrocedePanel(Panel_Compra.this);
             }
-        };
+        });
+        JButton validarPago = new JButton("Validar Pago");
+        this.add(validarPago);
+        validarPago.setBounds(20, 370, 200, 50);
+        validarPago.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ("Efectivo".equals(tipo)) {
+                    String codigoEfectivo = textoEfectivo.getText();
+                    if ("212378".equals(codigoEfectivo)) {
+                        procesarPago();
+                    } else {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Código de cajero inválido.");
+                    }
+                } else {
+                    String cardNumberStr = textoTarjeta.getText();
+                    String cvvStr = textoCVV.getText();
+                    String cardholderName = textoNombre.getText();
 
-        retroceder.addActionListener(Retroceder);
+                    try {
+                        long cardNumber = Long.parseLong(cardNumberStr);
+                        int cvv = Integer.parseInt(cvvStr);
+
+                        ValidadorPago validador = new ValidadorPago(tipo, cardNumber, cvv, cardholderName);
+                        if (validador.validar()) {
+                            procesarPago();
+                        } else {
+                            throw new Exception("Datos inválidos");
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Número de tarjeta o CVV inválidos: " + ex.getMessage());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Error al validar pago: " + ex.getMessage());
+                    }
+                }
+            }
+        });
+        JLabel asientoSeleccionado = new JLabel("Asientos seleccionados:");
+        asientoSeleccionado.setForeground(Color.white);
+        asientoSeleccionado.setFont(new Font("Arial", Font.BOLD, 16));
+        this.add(asientoSeleccionado);
+        asientoSeleccionado.setBounds(300, 130, 300, 30);
+
+        listaAsientosTXT = new JLabel();
+        listaAsientosTXT.setForeground(Color.white);
+        this.add(listaAsientosTXT);
+        listaAsientosTXT.setBounds(300, 170, 400, 150);
+        actualizarAsientosPendientes();
     }
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
     private void mostrarFormularioTarjeta(String tipo) {
         this.removeAll();
         this.repaint();
@@ -69,7 +132,22 @@ public class Panel_Compra extends JPanel {
         credito.setBounds(200, 100, 200, 50);
         credito.addActionListener(new CreditoActionListener());
 
-        JLabel numberTarjeta = new JLabel("Número de Tarjeta:");
+        JButton efectivo = new JButton("Efectivo");
+        this.add(efectivo);
+        efectivo.setBounds(400, 100, 200, 50);
+        efectivo.addActionListener(new EfectivoActionListener());
+
+        JButton retroceder = new JButton("Anterior");
+        this.add(retroceder);
+        retroceder.setBounds(0, 750, 150, 50);
+        retroceder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fondo.retrocedePanel(Panel_Compra.this);
+            }
+        });
+
+        JLabel numberTarjeta = new JLabel("Ingresa número de tarjeta");
         this.add(numberTarjeta);
         numberTarjeta.setBounds(0, 190, 200, 50);
         numberTarjeta.setForeground(Color.white);
@@ -78,43 +156,170 @@ public class Panel_Compra extends JPanel {
         this.add(textoTarjeta);
         textoTarjeta.setBounds(0, 240, 200, 30);
 
-        JLabel tarjetaCVV = new JLabel("CVV:");
+        JLabel tarjetaCVV = new JLabel("Ingresa CVV");
         this.add(tarjetaCVV);
-        tarjetaCVV.setBounds(0, 290, 200, 50);
+        tarjetaCVV.setBounds(0, 280, 200, 50);
         tarjetaCVV.setForeground(Color.white);
 
         textoCVV = new JTextField();
         this.add(textoCVV);
-        textoCVV.setBounds(0, 340, 200, 30);
+        textoCVV.setBounds(0, 330, 200, 30);
 
-        JLabel nombreTitular = new JLabel("Nombre del Titular:");
-        this.add(nombreTitular);
-        nombreTitular.setBounds(0, 390, 200, 50);
-        nombreTitular.setForeground(Color.white);
+        JLabel nombreTarjeta = new JLabel("Nombre del titular de la tarjeta");
+        this.add(nombreTarjeta);
+        nombreTarjeta.setBounds(0, 370, 300, 50);
+        nombreTarjeta.setForeground(Color.white);
 
         textoNombre = new JTextField();
         this.add(textoNombre);
-        textoNombre.setBounds(0, 440, 200, 30);
+        textoNombre.setBounds(0, 420, 200, 30);
 
-        JButton boton_enviar = new JButton("Submit");
-        this.add(boton_enviar);
-        boton_enviar.setBounds(0, 490, 200, 30);
-        boton_enviar.addActionListener(new SubmitActionListener(tipo));
-
-        JButton anterior = new JButton("Anterior");
-        this.add(anterior);
-        anterior.setBounds(0, 750, 150, 50);
-        anterior.addActionListener(new ActionListener() {
+        JButton validarPago = new JButton("Validar Pago");
+        this.add(validarPago);
+        validarPago.setBounds(0, 470, 200, 50);
+        validarPago.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mostrarPantallaInicial();
+                if ("Efectivo".equals(tipo)) {
+                    String codigoCajero = textoEfectivo.getText();
+                    String montoIngresadoStr = textoMonto.getText();
+
+                    try {
+                        double montoIngresado = Double.parseDouble(montoIngresadoStr);
+
+                        if ("212378".equals(codigoCajero)) {
+                            double vuelto = montoIngresado - precio;
+                            if (vuelto >= 0) {
+                                JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente. Su vuelto es: " + vuelto);
+                                procesarPago();
+                            } else {
+                                JOptionPane.showMessageDialog(Panel_Compra.this, "Monto ingresado insuficiente.");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(Panel_Compra.this, "Código de cajero inválido.");
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Monto ingresado inválido: " + ex.getMessage());
+                    }
+                } else {
+                    String cardNumberStr = textoTarjeta.getText();
+                    String cvvStr = textoCVV.getText();
+                    String cardholderName = textoNombre.getText();
+
+                    try {
+                        long cardNumber = Long.parseLong(cardNumberStr);
+                        int cvv = Integer.parseInt(cvvStr);
+
+                        ValidadorPago validador = new ValidadorPago(tipo, cardNumber, cvv, cardholderName);
+                        if (validador.validar()) {
+                            procesarPago();
+                        } else {
+                            throw new Exception("Datos inválidos");
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Número de tarjeta o CVV inválidos: " + ex.getMessage());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Error al validar pago: " + ex.getMessage());
+                    }
+                }
             }
         });
     }
+    private class EfectivoActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            tipo = "Efectivo";
+            mostrarFormularioEfectivo();
+        }
+    }
+    private void mostrarFormularioEfectivo() {
+        this.removeAll();
+        this.repaint();
+
+        JLabel printSeleccion = new JLabel("Pago en Efectivo");
+        this.add(printSeleccion);
+        printSeleccion.setBounds(0, 0, 500, 100);
+        printSeleccion.setForeground(Color.white);
+
+        JButton retroceder = new JButton("Anterior");
+        this.add(retroceder);
+        retroceder.setBounds(0, 750, 150, 50);
+        retroceder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fondo.retrocedePanel(Panel_Compra.this);
+            }
+        });
+
+        JLabel codigoCajero = new JLabel("Ingresa código de cajero");
+        this.add(codigoCajero);
+        codigoCajero.setBounds(0, 190, 200, 50);
+        codigoCajero.setForeground(Color.white);
+
+        textoEfectivo = new JTextField();
+        this.add(textoEfectivo);
+        textoEfectivo.setBounds(0, 240, 200, 30);
+
+        JLabel montoIngresado = new JLabel("Monto ingresado");
+        this.add(montoIngresado);
+        montoIngresado.setBounds(0, 280, 200, 50);
+        montoIngresado.setForeground(Color.white);
+
+        textoMonto = new JTextField();
+        this.add(textoMonto);
+        textoMonto.setBounds(0, 330, 200, 30);
+
+        JButton validarPago = new JButton("Validar Pago");
+        this.add(validarPago);
+        validarPago.setBounds(0, 380, 200, 50);
+        validarPago.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String codigoCajero = textoEfectivo.getText();
+                String montoIngresadoStr = textoMonto.getText();
+
+                try {
+                    double montoIngresado = Double.parseDouble(montoIngresadoStr);
+
+                    if ("212378".equals(codigoCajero)) {
+                        double vuelto = montoIngresado - precio;
+                        if (vuelto >= 0) {
+                            JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente. Su vuelto es: " + vuelto);
+                            procesarPago();
+                        } else {
+                            JOptionPane.showMessageDialog(Panel_Compra.this, "Monto ingresado insuficiente.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Código de cajero inválido.");
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(Panel_Compra.this, "Monto ingresado inválido: " + ex.getMessage());
+                }
+            }
+        });
+    }
+
     private void mostrarPantallaInicial() {
         this.removeAll();
         this.repaint();
         //new Panel_Compra(fondo);
+    }
+    private void procesarPago() {
+        JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente");
+        ArrayList<Pasaje> pasajes = new ArrayList<>();
+        for (Asiento asiento : asientos) {
+            pasajes.add(new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), "Fecha y Hora de Salida"));
+        }
+        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+        fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
+    }
+    private void actualizarAsientosPendientes() {
+        StringBuilder listaAsientos = new StringBuilder("<html>Asientos seleccionados:<br>");
+        for (Asiento asiento : asientos) {
+            listaAsientos.append("Asiento ").append(asiento.getNumero()).append("<br>");
+        }
+        listaAsientos.append("</html>");
+        listaAsientosTXT.setText(listaAsientos.toString());
     }
 
     private void cambiarAPanelPasaje(Pasaje pasaje) {
@@ -141,6 +346,8 @@ public class Panel_Compra extends JPanel {
             mostrarFormularioTarjeta("Crédito");
         }
     }
+
+
     private class SubmitActionListener implements ActionListener {
         private String tipoTarjeta;
 
@@ -159,7 +366,7 @@ public class Panel_Compra extends JPanel {
                 if (validador.validar()) {
                     JOptionPane.showMessageDialog(Panel_Compra.this, "Pago realizado con éxito");
 
-                    // Aquí se supone que ya tienes las instancias de Bus, Asiento, Pasajero y Horario
+                    // probando la implementacion
                     int numeroAsiento = 12; // Ejemplo
                     String nombrePasajero = "Juan Pérez"; // Ejemplo
                     String horarioFechaSalida = "2024-07-10 08:00 AM"; // Ejemplo
@@ -175,7 +382,7 @@ public class Panel_Compra extends JPanel {
             }
         }
     }
-    // Clase ValidadorPago (similar a la definida anteriormente)
+    // Clase ValidadorPago ya se encuentra casi en la etapa final
     public class ValidadorPago {
         private String cardType;
         private long cardNumber;

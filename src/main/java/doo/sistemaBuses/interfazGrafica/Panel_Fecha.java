@@ -13,14 +13,13 @@ public class Panel_Fecha extends JPanel{
 
 
 
-    public Panel_Fecha(Panel_fondo panel_fondo){
+    public Panel_Fecha(Panel_fondo panel_fondo,Date Fecha_inicio){
 
         this.setLayout(null);
-
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         JTextField texto = new JTextField();
         JLabel print = new JLabel("Ingresa la fecha de salida de bus: (dia/mes/año)");
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar calendario = Calendar.getInstance();
+
 
 
 
@@ -40,9 +39,7 @@ public class Panel_Fecha extends JPanel{
                 int tecla_presionada = e.getKeyCode();
                 if(tecla_presionada == KeyEvent.VK_ENTER){
                     try {
-                        Date Fecha_inicio = new Date();
-                        String String_Fecha_inicio = formato.format(Fecha_inicio);
-                        Fecha_inicio = formato.parse(String_Fecha_inicio);
+
                         Date fecha;
                         fecha = formato.parse(texto.getText());
                         for(int i=0;i<=14;i++){

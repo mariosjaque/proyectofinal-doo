@@ -20,13 +20,21 @@ public class Panel_fondo extends JPanel{
     private Date Fecha;
 
 
-    private Panel_fondo(){
+    private Panel_fondo() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date Fecha_inicio = new Date();
+        String String_Fecha_inicio = formato.format(Fecha_inicio);
+        try {
+            Fecha_inicio = formato.parse(String_Fecha_inicio);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         this.setBounds(0,0,1000,1000);
         this.setLayout(null);
 
         Paneles = new ArrayList<>();
-        panel_fecha = new Panel_Fecha(this);
+        panel_fecha = new Panel_Fecha(this,Fecha_inicio);
         Paneles.add(panel_fecha);
         panel_Pasajes = new Panel_pasajes();
 

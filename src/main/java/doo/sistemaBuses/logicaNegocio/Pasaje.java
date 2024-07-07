@@ -17,4 +17,7 @@ public class Pasaje {
     }
     public void setBus(Bus BUS){bus = BUS;}
 
+    public void generarPDF(String s) {
+    }
+
 }

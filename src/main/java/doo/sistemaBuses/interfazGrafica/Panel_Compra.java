@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 public class Panel_Compra extends JPanel {
     private JTextField textoTarjeta;
+    private Bus bus;
     private JTextField textoCVV;
     private JTextField textoNombre;
     private Panel_fondo fondo;
@@ -110,14 +111,14 @@ public class Panel_Compra extends JPanel {
             }
         });
     }
-    //private void mostrarPantallaInicial() {
-      //  this.removeAll();
-        //this.repaint();
-        //new Panel_Compra(new Panel_fondo());
-    //}
+    private void mostrarPantallaInicial() {
+        this.removeAll();
+        this.repaint();
+        //new Panel_Compra(fondo);
+    }
 
     private void cambiarAPanelPasaje(Pasaje pasaje) {
-        fondo.avanzaPanel(new Panel_pasajes());
+        fondo.avanzaPanel(new Panel_pasajes(pasaje), this);
     }
 
 

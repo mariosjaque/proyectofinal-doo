@@ -3,8 +3,12 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import doo.sistemaBuses.logicaNegocio.Bus;
+import doo.sistemaBuses.logicaNegocio.SalonCama;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Date;
 
 public class Pasaje {
     private Bus bus;
@@ -45,5 +49,11 @@ public class Pasaje {
         document.add(new Paragraph("Nombre del Pasajero: " + nombrePasajero));
         document.add(new Paragraph("Horario y Fecha de Salida: " + horarioFechaSalida));
         document.close();
+    }
+
+    public void setBus(SalonCama salonCama) {
+    }
+
+    public void asignar_fecha_bus(Date fechaInicio) {
     }
 }

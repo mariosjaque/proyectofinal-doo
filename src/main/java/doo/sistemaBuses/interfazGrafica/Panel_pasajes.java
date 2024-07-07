@@ -1,7 +1,8 @@
 package doo.sistemaBuses.interfazGrafica;
 
 import doo.sistemaBuses.logicaNegocio.Bus;
-import doo.sistemaBuses.logicaNegocio.Pasaje;
+import doo.sistemaBuses.interfazGrafica.Pasaje;
+
 import doo.sistemaBuses.interfazGrafica.Panel_Compra;
 
 import javax.swing.*;
@@ -24,7 +25,7 @@ public class Panel_pasajes extends JPanel {
         infoLabel.setBounds(0, 0, 500, 100);
         infoLabel.setForeground(Color.white);
 
-        JLabel busLabel = new JLabel("Bus: " + pasaje.bus_seleccionado());
+        JLabel busLabel = new JLabel("Bus: " + pasaje.getBus()); //editar aqui luego -->
         this.add(busLabel);
         busLabel.setBounds(0, 100, 500, 50);
         busLabel.setForeground(Color.white);
@@ -52,9 +53,9 @@ public class Panel_pasajes extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     pasaje.generarPDF("pasaje.pdf");
-                    JOptionPane.showMessageDialog(Panel_Pasaje.this, "PDF generado exitosamente");
+                    JOptionPane.showMessageDialog(Panel_pasajes.this, "PDF generado exitosamente");
                 } catch (FileNotFoundException | DocumentException ex) {
-                    JOptionPane.showMessageDialog(Panel_Pasaje.this, "Error al generar PDF: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(Panel_pasajes.this, "Error al generar PDF: " + ex.getMessage());
                 }
             }
         });

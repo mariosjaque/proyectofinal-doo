@@ -32,32 +32,26 @@ public class Panel_fondo extends JPanel{
         panel_buses = new Panel_Buses(this);
         Paneles.add(panel_buses);
         panel_fecha = new Panel_Fecha(this);
-        panel_Pasajes = new Panel_pasajes();
+        //
 
         panel_buses.setBackground(Color.magenta);
         panel_fecha.setBackground(Color.blue);
-        panel_Pasajes.setBackground(Color.yellow);
+        //panel_Pasajes.setBackground(Color.yellow);
 
 
         this.add(panel_buses);
         this.add(panel_fecha);
-        this.add(panel_Pasajes);
+        //this.add(panel_Pasajes);
 
         panel_fecha.setVisible(true);
-        panel_Pasajes.setVisible(false);
+        //panel_Pasajes.setVisible(false);
         panel_buses.setVisible(false);
 
         Date currentDate = new Date();
         ArrayList<Pasaje> pasajes = new ArrayList<Pasaje>();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Fecha_inicio = formato.parse("8/7/2024");
-        for(int i=0;i<=14;i++){
-            Pasaje pasaje = new Pasaje();
-            pasaje.setBus(new SalonCama(1,currentDate));
-            pasajes.add(pasaje);
-            pasajes.get(i).asignar_fecha_bus(Fecha_inicio);
-            Fecha_inicio = this.variarFecha(Fecha_inicio,i);
-        }
+
 
     }
 

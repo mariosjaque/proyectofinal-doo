@@ -8,14 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Panel_Compra extends JPanel {
     private JTextField textoTarjeta;
     private ArrayList<Asiento> asientos;
     private Bus bus;
-    private JTextField textoCVV, textoEfectivo;
+    private JTextField textoCVV, textoEfectivo, textoNombrePass;
     private JTextField textoMonto;
     private JTextField textoNombre;
     private Panel_fondo fondo;
@@ -252,14 +250,23 @@ public class Panel_Compra extends JPanel {
         this.add(textoEfectivo);
         textoEfectivo.setBounds(0, 240, 200, 30);
 
+        JLabel nombrePasajero = new JLabel("Nombre del pasajero");
+        this.add(nombrePasajero);
+        nombrePasajero.setBounds(0, 280, 200, 50);
+        nombrePasajero.setForeground(Color.white);
+
+        textoNombrePass = new JTextField();
+        this.add(textoNombrePass);
+        textoNombrePass.setBounds(0, 330, 200, 30);
+
         JLabel montoIngresado = new JLabel("Monto ingresado");
         this.add(montoIngresado);
-        montoIngresado.setBounds(0, 280, 200, 50);
+        montoIngresado.setBounds(0, 370, 300, 50);
         montoIngresado.setForeground(Color.white);
 
         textoMonto = new JTextField();
         this.add(textoMonto);
-        textoMonto.setBounds(0, 330, 200, 30);
+        textoMonto.setBounds(0, 420, 200, 30);
 
         JButton validarPago = new JButton("Validar Pago");
         this.add(validarPago);
@@ -274,10 +281,20 @@ public class Panel_Compra extends JPanel {
                     double montoIngresado = Double.parseDouble(montoIngresadoStr);
 
                     if ("212378".equals(codigoCajero)) {
-                        double vuelto = montoIngresado - precio;
+                        double vuelto = montoIngresado - (4000* asientos.size());
                         if (vuelto >= 0) {
                             JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente. Su vuelto es: " + vuelto);
-                            procesarPago();
+                            ArrayList<Pasaje> pasajes = new ArrayList<>();
+                            ArrayList<Asiento> asientosSeleccionados = new ArrayList<>();
+                            for (Asiento asiento : asientos) {
+                                Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), "Fecha y Hora de Salida");
+                                pasajes.add(pasaje);
+                                Asiento asiento_numero = new Asiento(asiento.getNumero());
+                                asientosSeleccionados.add(asiento_numero);
+                            }
+                            Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+                            fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
+
                         } else {
                             JOptionPane.showMessageDialog(Panel_Compra.this, "Monto ingresado insuficiente.");
                         }
@@ -304,6 +321,7 @@ public class Panel_Compra extends JPanel {
         }
         Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
         fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
+
     }
     private void actualizarAsientosPendientes() {
         StringBuilder listaAsientos = new StringBuilder("<html>Asientos seleccionados:<br>");

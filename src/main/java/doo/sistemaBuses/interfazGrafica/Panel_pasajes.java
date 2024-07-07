@@ -4,10 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class Panel_pasajes extends JPanel {
     private ArrayList<Pasaje> pasajes;
+    Panel_fondo fondo;
 
     public Panel_pasajes(ArrayList<Pasaje> pasajes) {
         this.pasajes = pasajes;
@@ -30,6 +32,7 @@ public class Panel_pasajes extends JPanel {
         scrollPane.setBounds(50, 60, 900, 400);
         this.add(scrollPane);
 
+
         for (Pasaje pasaje : pasajes) {
             areaDetalles.append("Bus: " + pasaje.getBus().toString() + "\n");
             areaDetalles.append("Número de Asiento: " + pasaje.getNumeroAsiento() + "\n");
@@ -37,17 +40,23 @@ public class Panel_pasajes extends JPanel {
             areaDetalles.append("Fecha y Hora de Salida: " + pasaje.getHorarioFechaSalida() + "\n");
             areaDetalles.append("Precio: $" + pasaje.getPrecio() + "\n\n");
         }
-
-        JButton generarPdfBtn = new JButton("Generar PDF");
-        generarPdfBtn.setBounds(50, 480, 200, 50);
-        this.add(generarPdfBtn);
-
-        generarPdfBtn.addActionListener(new ActionListener() {
+        JButton confirmarCompra = new JButton("Confirmar Compra");
+        this.add(confirmarCompra);
+        confirmarCompra.setBounds(0, 470, 200, 50);
+        confirmarCompra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Pasaje.generarPDF(pasajes);
+
+                try {
+                    Pasaje.generarPDF(pasajes);
+                    mostrarBotonVolverAlInicio();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + ex.getMessage());
+                }
             }
         });
+        //demasiados botones ahora cada uno se va a identificar como "sufijo"+"Btn"
+
 
         JButton retroceder = new JButton("Anterior");
         retroceder.setBounds(50, 550, 150, 50);
@@ -56,9 +65,30 @@ public class Panel_pasajes extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //fondo.retrocedePanel(Panel_pasajes.this);
+
+                fondo.retrocedePanel(Panel_pasajes.this);
             }
         });
+
+
     }
+
+    private void mostrarBotonVolverAlInicio() {
+        JButton volverAlInicio = new JButton("Inicio");
+        volverAlInicio.setBounds(200, 550, 150, 50);
+        this.add(volverAlInicio);
+        volverAlInicio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Ventana ventana = new Ventana();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+    }
+
 }
 

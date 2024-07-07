@@ -1,5 +1,4 @@
 package doo.sistemaBuses.interfazGrafica;
-import doo.sistemaBuses.logicaNegocio.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Panel_fondo extends JPanel{
     Panel_Asientos panel_asientos;

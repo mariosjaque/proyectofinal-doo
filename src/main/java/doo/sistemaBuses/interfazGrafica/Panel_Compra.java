@@ -173,4 +173,21 @@ public class Panel_Compra extends JPanel {
             }
         }
     }
+    // Clase ValidadorPago (similar a la definida anteriormente)
+    public class ValidadorPago {
+        private String cardType;
+        private long cardNumber;
+        private int cvv;
+        private String cardholderName;
+
+        public ValidadorPago(String cardType, long cardNumber, int cvv, String cardholderName) {
+            this.cardType = cardType;
+            this.cardNumber = cardNumber;
+            this.cvv = cvv;
+            this.cardholderName = cardholderName;
+        }
+
+
+    }
+
 }

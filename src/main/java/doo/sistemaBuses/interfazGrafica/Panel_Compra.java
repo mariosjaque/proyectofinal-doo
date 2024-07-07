@@ -110,6 +110,10 @@ public class Panel_Compra extends JPanel {
             }
         });
     }
-
+    private void mostrarPantallaInicial() {
+        this.removeAll();
+        this.repaint();
+        new Panel_Compra(new Panel_fondo());
+    }
 
 }

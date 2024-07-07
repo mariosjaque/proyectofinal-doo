@@ -1,41 +1,28 @@
 package doo.sistemaBuses.interfazGrafica;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import doo.sistemaBuses.logicaNegocio.Bus;
 import doo.sistemaBuses.logicaNegocio.SalonCama;
+import doo.sistemaBuses.logicaNegocio.SemiCama;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import doo.sistemaBuses.logicaNegocio.modelosBus;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Pasaje extends ArrayList<Pasaje> {
-    private ArrayList<Pasaje> pasajes;
-    private JLabel detallesPasajesTXT;
+public class Pasaje extends JPanel {
     private Bus bus;
     private int numeroAsiento;
     private String nombrePasajero;
     private String horarioFechaSalida;
+    private double precio;
 
     public Pasaje(Bus bus, int numeroAsiento, String nombrePasajero, String horarioFechaSalida) {
         this.bus = bus;
         this.numeroAsiento = numeroAsiento;
         this.nombrePasajero = nombrePasajero;
         this.horarioFechaSalida = horarioFechaSalida;
+        this.precio = 4000; // Precio del pasaje
     }
 
     public Bus getBus() {
@@ -54,26 +41,29 @@ public class Pasaje extends ArrayList<Pasaje> {
         return horarioFechaSalida;
     }
 
-    @Override
-    public List<Pasaje> reversed() {
-        return super.reversed();
+    public double getPrecio() {
+        return precio;
     }
 
-    //public void generarPDF(String filePath) throws FileNotFoundException, DocumentException {
-      //  Document document = new Document();
-        //PdfWriter.getInstance(document, new FileOutputStream(filePath));
-        //document.open();
-        //document.add(new Paragraph("Información del Pasaje"));
-        //document.add(new Paragraph("Bus: " + bus));
-        //document.add(new Paragraph("Número de Asiento: " + numeroAsiento));
-        //document.add(new Paragraph("Nombre del Pasajero: " + nombrePasajero));
-        //document.add(new Paragraph("Horario y Fecha de Salida: " + horarioFechaSalida));
-        //document.close();
-    //}
+    public static double calcularTotal(ArrayList<Pasaje> pasajes) {
+        double total = 0;
+        for (Pasaje pasaje : pasajes) {
+            total += pasaje.getPrecio();
+        }
+        return total;
+    }
+    public static String generarNombreArchivo(ArrayList<Pasaje> numAsiento) {
+        String tipoBus = "SemiCama"; // Ajusta según cómo obtienes el tipo de bus
+
+        String nombreArchivo = "Pasaje_" + tipoBus + numAsiento + ".pdf";
+        return nombreArchivo;
+    }
+
     public static void generarPDF(ArrayList<Pasaje> pasajes) {
         Document document = new Document();
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("Pasajes.pdf"));
+            String nombrePDF = generarNombreArchivo(pasajes);
+            PdfWriter.getInstance(document, new FileOutputStream(nombrePDF));
             document.open();
 
             // Encabezado
@@ -113,14 +103,14 @@ public class Pasaje extends ArrayList<Pasaje> {
             Font contentFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
             for (Pasaje pasaje : pasajes) {
                 PdfPCell cell;
-                ////////modificar aqui luego ------------> ***************************************
-                cell = new PdfPCell(new Phrase(String.valueOf(pasaje.bus), contentFont));
+
+                cell = new PdfPCell(new Phrase(pasaje.getBus().toString(), contentFont));
                 cell.setPaddingLeft(5);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(String.valueOf(pasaje.numeroAsiento), contentFont));
+                cell = new PdfPCell(new Phrase(String.valueOf(pasaje.getNumeroAsiento()), contentFont));
                 cell.setPaddingLeft(5);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -132,7 +122,7 @@ public class Pasaje extends ArrayList<Pasaje> {
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(pasaje.horarioFechaSalida, contentFont));
+                cell = new PdfPCell(new Phrase(pasaje.getHorarioFechaSalida(), contentFont));
                 cell.setPaddingLeft(5);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -147,5 +137,4 @@ public class Pasaje extends ArrayList<Pasaje> {
             document.close();
         }
     }
-
 }

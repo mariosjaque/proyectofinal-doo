@@ -63,13 +63,7 @@ public class Panel_fondo extends JPanel{
         return Fecha;
     }
 
-    public Date variarFecha(Date fecha, int valor){
-        if (valor==0) return fecha;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
-        calendar.add(Calendar.DAY_OF_YEAR, valor);
-        return calendar.getTime();
-    }
+
     public static Panel_fondo singleton(){
         return panel_fondo;
     }

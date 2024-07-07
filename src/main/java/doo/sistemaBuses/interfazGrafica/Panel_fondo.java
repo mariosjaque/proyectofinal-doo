@@ -22,7 +22,15 @@ public class Panel_fondo extends JPanel{
     private Date Fecha;
 
 
-    private Panel_fondo(){
+    private Panel_fondo() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date Fecha_inicio = new Date();
+        String String_Fecha_inicio = formato.format(Fecha_inicio);
+        try {
+            Fecha_inicio = formato.parse(String_Fecha_inicio);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         this.setBounds(0,0,1000,1000);
         this.setLayout(null);
@@ -30,7 +38,7 @@ public class Panel_fondo extends JPanel{
         Paneles = new ArrayList<>();
         terminales_fechas = new ArrayList<>();
         terminales_cont = new ArrayList<>();
-        panel_fecha = new Panel_Fecha(this);
+        panel_fecha = new Panel_Fecha(this,Fecha_inicio);
         Paneles.add(panel_fecha);
         panel_Pasajes = new Panel_pasajes();
 
@@ -75,13 +83,6 @@ public class Panel_fondo extends JPanel{
         return terminales_cont.get(terminales_fechas.indexOf(Fecha));
     }
 
-    public Date variarFecha(Date fecha, int valor){
-        if (valor==0) return fecha;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(fecha);
-        calendar.add(Calendar.DAY_OF_YEAR, valor);
-        return calendar.getTime();
-    }
     public static Panel_fondo singleton(){
         return panel_fondo;
     }

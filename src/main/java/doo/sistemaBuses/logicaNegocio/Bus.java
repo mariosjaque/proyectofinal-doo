@@ -1,6 +1,4 @@
 package doo.sistemaBuses.logicaNegocio;
-import doo.sistemaBuses.logicaNegocio.Asiento;
-import doo.sistemaBuses.logicaNegocio.modelosBus;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,15 +12,15 @@ public abstract class Bus {
     private String recorridoBus;
     private ArrayList<Asiento> Asientos;
 
-    public Bus(int tipoBus, int patente, Instant horaSalida, String recorrido){
+    public Bus(int tipoBus, int patente, Instant horaSalida, String recorrido) {
         fechaSalida = Date.from(horaSalida);
         horarioBus = horaSalida;
         patenteBus = patente;
         recorridoBus = recorrido;
         Asientos = new ArrayList<>();
         modeloBus = modelosBus.values()[tipoBus];
-        for(int i=0;i<modeloBus.getNumeroAsientos();i++){
-            Asiento asiento = new Asiento(i+1);
+        for (int i = 0; i < modeloBus.getNumeroAsientos(); i++) {
+            Asiento asiento = new Asiento(i + 1);
             Asientos.add(asiento);
         }
     }
@@ -35,8 +33,15 @@ public abstract class Bus {
         return modeloBus;
     }
 
-    public Asiento getAsiento(int i){
+    public Asiento getAsiento(int i) {
         return Asientos.get(i);
     }
 
+    public String getRecorridoBus() {
+        return recorridoBus;
+    }
+
+    public Date getFechaSalida() {
+        return fechaSalida;
+    }
 }

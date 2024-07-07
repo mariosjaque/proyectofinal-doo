@@ -35,8 +35,4 @@ public class terminalBus{
     public Bus getBuses(int i){
         return Buses.get(i);
     }
-
-    public Date getFecha(){
-        return fecha;
-    }
 }

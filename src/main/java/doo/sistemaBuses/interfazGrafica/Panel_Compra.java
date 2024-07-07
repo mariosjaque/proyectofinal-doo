@@ -25,11 +25,14 @@ public class Panel_Compra extends JPanel {
     private JTextField textoCodigoCajero;
     private double totalPagar;
 
+    private JLabel fondo2;
+
     public Panel_Compra(Panel_fondo fondo, Bus bus, ArrayList<Asiento> asientos) {
         ImageIcon imagen_fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
         JLabel Fondo = new JLabel();
         Fondo.setIcon(new ImageIcon(imagen_fondo.getImage().getScaledInstance(1000,1000,Image.SCALE_SMOOTH)));
         Fondo.setBounds(0,0,1000,1000);
+        fondo2=Fondo;
         this.fondo = fondo;
         this.bus = bus;
         this.asientos = asientos;
@@ -126,7 +129,9 @@ public class Panel_Compra extends JPanel {
 
     private void mostrarFormularioTarjeta(String tipo) {
         this.removeAll();
+
         this.repaint();
+
 
         JLabel printSeleccion = new JLabel("Selecciona tu tipo de tarjeta");
         this.add(printSeleccion);
@@ -220,6 +225,7 @@ public class Panel_Compra extends JPanel {
                 }
             }
         });
+        this.add(fondo2);
     }
     private class EfectivoActionListener implements ActionListener {
         @Override

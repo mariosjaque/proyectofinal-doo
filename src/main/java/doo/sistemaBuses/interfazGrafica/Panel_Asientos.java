@@ -58,7 +58,7 @@ public class Panel_Asientos extends JPanel {
             for(int j=1;j<=filasPorPiso;j++) {
                 int x = 0;
                 for (int k=((4*j)-4)+(4*filasPorPiso*i); k<(4*j)+(4*filasPorPiso*i); k++) {
-                    Asiento asiento = bus.getAsientos().get(k);
+                    Asiento asiento = bus.getAsiento(k);
                     JButton asientoBtn = asientoGrafico(asiento);
                     ActionListener oyente = new ActionListener() {
                         @Override

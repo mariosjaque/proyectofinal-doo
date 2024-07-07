@@ -1,9 +1,9 @@
 package doo.sistemaBuses.logicaNegocio;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class SalonCama extends Bus{
-    public SalonCama(int patente, Date horaSalida){
-        super(0, patente, horaSalida);
+    public SalonCama(int patente, Instant horaSalida, String recorrido){
+        super(0, patente, horaSalida, recorrido);
     }
 }

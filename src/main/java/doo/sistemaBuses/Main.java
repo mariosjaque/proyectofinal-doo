@@ -8,6 +8,6 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
 
-        Ventana ventana = new Ventana();
+        Ventana ventana = Ventana.singleton();
     }
 }

@@ -16,7 +16,7 @@ public class Panel_Buses extends JPanel {
 
     private Bus bus_seleccionado;
 
-    public Panel_Buses(Panel_fondo fondo) throws ParseException {
+    public Panel_Buses(Panel_fondo fondo){
         this.setLayout(null);
         this.setBounds(0,0,1000,1000);
 

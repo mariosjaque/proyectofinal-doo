@@ -13,13 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Panel_fondo extends JPanel{
+    private static Panel_fondo panel_fondo = new Panel_fondo();
     Panel_Fecha panel_fecha;
     ArrayList<JPanel> Paneles;
     Panel_pasajes panel_Pasajes;
     private Date Fecha;
 
 
-    public Panel_fondo() throws ParseException {
+    private Panel_fondo(){
 
         this.setBounds(0,0,1000,1000);
         this.setLayout(null);
@@ -69,4 +70,8 @@ public class Panel_fondo extends JPanel{
         calendar.add(Calendar.DAY_OF_YEAR, valor);
         return calendar.getTime();
     }
+    public static Panel_fondo singleton(){
+        return panel_fondo;
+    }
+
 }

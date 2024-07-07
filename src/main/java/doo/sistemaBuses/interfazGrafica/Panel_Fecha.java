@@ -13,7 +13,7 @@ public class Panel_Fecha extends JPanel{
 
 
 
-    public Panel_Fecha(Panel_fondo panel_fondo) throws ParseException {
+    public Panel_Fecha(Panel_fondo panel_fondo){
 
         this.setLayout(null);
 

@@ -28,6 +28,8 @@ public class Panel_fondo extends JPanel{
         this.setLayout(null);
 
         Paneles = new ArrayList<>();
+        terminales_fechas = new ArrayList<>();
+        terminales_cont = new ArrayList<>();
         panel_fecha = new Panel_Fecha(this);
         Paneles.add(panel_fecha);
         panel_Pasajes = new Panel_pasajes();

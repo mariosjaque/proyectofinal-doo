@@ -1,11 +1,9 @@
 package doo.sistemaBuses.interfazGrafica;
 
-import doo.sistemaBuses.logicaNegocio.Bus;
-import doo.sistemaBuses.interfazGrafica.Pasaje;
-
-import doo.sistemaBuses.interfazGrafica.Panel_Compra;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Panel_pasajes extends JPanel {
@@ -15,38 +13,52 @@ public class Panel_pasajes extends JPanel {
         this.pasajes = pasajes;
         this.setLayout(null);
         this.setBounds(0, 0, 1000, 1000);
+        this.setBackground(new Color(30, 30, 30));
 
-        JButton descargarPDF = new JButton("Descargar PDF");
-        descargarPDF.setBounds(400, 750, 200, 50);
-        this.add(descargarPDF);
-        descargarPDF.addActionListener(e -> Pasaje.generarPDF(pasajes));
+        JLabel label = new JLabel("Detalles del Pasaje");
+        label.setBounds(50, 20, 300, 30);
+        label.setForeground(Color.white);
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(label);
 
-        JLabel detalles = new JLabel("Detalles de los Pasajes:");
-        detalles.setForeground(Color.white);
-        detalles.setFont(new Font("Arial", Font.BOLD, 16));
-        detalles.setBounds(20, 20, 300, 30);
-        this.add(detalles);
+        JTextArea areaDetalles = new JTextArea();
+        areaDetalles.setEditable(false);
+        areaDetalles.setBackground(new Color(50, 50, 50));
+        areaDetalles.setForeground(Color.white);
+        areaDetalles.setFont(new Font("Arial", Font.PLAIN, 14));
+        JScrollPane scrollPane = new JScrollPane(areaDetalles);
+        scrollPane.setBounds(50, 60, 900, 400);
+        this.add(scrollPane);
 
-        StringBuilder info = new StringBuilder("<html>");
         for (Pasaje pasaje : pasajes) {
-            info.append("Bus: ").append(pasaje.getBus().getModeloBus().SalonCama)
-                    .append(", Asiento: ").append(pasaje.getNumeroAsiento())
-                    .append(", Pasajero: ").append(pasaje.getNombrePasajero())
-                    .append(", Fecha y Hora de Salida: ").append(pasaje.getHorarioFechaSalida())
-                    .append("<br>");
+            areaDetalles.append("Bus: " + pasaje.getBus().toString() + "\n");
+            areaDetalles.append("Número de Asiento: " + pasaje.getNumeroAsiento() + "\n");
+            areaDetalles.append("Nombre del Pasajero: " + pasaje.getNombrePasajero() + "\n");
+            areaDetalles.append("Fecha y Hora de Salida: " + pasaje.getHorarioFechaSalida() + "\n");
+            areaDetalles.append("Precio: $" + pasaje.getPrecio() + "\n\n");
         }
-        info.append("</html>");
 
-        JLabel pasajeInfo = new JLabel(info.toString());
-        pasajeInfo.setForeground(Color.white);
-        pasajeInfo.setBounds(20, 60, 960, 600);
-        this.add(pasajeInfo);
-    }
+        JButton generarPdfBtn = new JButton("Generar PDF");
+        generarPdfBtn.setBounds(50, 480, 200, 50);
+        this.add(generarPdfBtn);
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.setColor(Color.gray);
-        g.fillRect(0, 0, 1000, 1000);
+        generarPdfBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pasaje.generarPDF(pasajes);
+            }
+        });
+
+        JButton retroceder = new JButton("Anterior");
+        retroceder.setBounds(50, 550, 150, 50);
+        this.add(retroceder);
+        retroceder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //fondo.retrocedePanel(Panel_pasajes.this);
+            }
+        });
     }
 }
+

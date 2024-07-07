@@ -9,7 +9,7 @@ public abstract class Bus {
     private Date horarioBus;
     private modelosBus modeloBus;
     private int patenteBus;
-    private Date dia;
+
     private ArrayList<Asiento> Asientos;
 
     public Bus(int tipoBus, int patente, Date horaSalida){
@@ -33,10 +33,6 @@ public abstract class Bus {
 
     public ArrayList<Asiento> getAsientos(){
         return Asientos;
-    }
-
-    public void setdia(Date fecha){
-        dia = fecha;
     }
 
 }

@@ -22,11 +22,17 @@ public class Panel_Compra extends JPanel {
     private JLabel listaAsientosTXT;
     private String tipo;
     private double precio;
+    private JLabel totalTXT;
+    private double totalCompra = 0;
+    private JTextField textoCodigoCajero;
+    private double totalPagar;
 
     public Panel_Compra(Panel_fondo fondo, Bus bus, ArrayList<Asiento> asientos) {
         this.fondo = fondo;
         this.bus = bus;
         this.asientos = asientos;
+        //calcular precio a pagar
+        totalPagar = asientos.size() * 4000;
 
         this.setLayout(null);
         this.setBounds(0, 0, 1000, 1000);
@@ -97,20 +103,22 @@ public class Panel_Compra extends JPanel {
                 }
             }
         });
-        JLabel asientoSeleccionado = new JLabel("Asientos seleccionados:");
-        asientoSeleccionado.setForeground(Color.white);
-        asientoSeleccionado.setFont(new Font("Arial", Font.BOLD, 16));
-        this.add(asientoSeleccionado);
-        asientoSeleccionado.setBounds(300, 130, 300, 30);
+        JLabel asientosSeleccionados = new JLabel("Asientos seleccionados:");
+        this.add(asientosSeleccionados);
+        asientosSeleccionados.setBounds(650, 10, 200, 30);
+        asientosSeleccionados.setForeground(Color.white);
 
-        listaAsientosTXT = new JLabel();
-        listaAsientosTXT.setForeground(Color.white);
-        this.add(listaAsientosTXT);
-        listaAsientosTXT.setBounds(300, 170, 400, 150);
-        actualizarAsientosPendientes();
+        JTextArea areaAsientos = new JTextArea();
+        areaAsientos.setEditable(false);
+        for (Asiento asiento : asientos) {
+            areaAsientos.append("Asiento: " + asiento.getNumero() + "\n");
+        }
+        JScrollPane scrollPane = new JScrollPane(areaAsientos);
+        scrollPane.setBounds(650, 50, 300, 200);
+        this.add(scrollPane);
     }
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void getPrecio(double precio) {
+        this.precio = precio * asientos.size();
     }
 
     private void mostrarFormularioTarjeta(String tipo) {
@@ -180,47 +188,31 @@ public class Panel_Compra extends JPanel {
         validarPago.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ("Efectivo".equals(tipo)) {
-                    String codigoCajero = textoEfectivo.getText();
-                    String montoIngresadoStr = textoMonto.getText();
+                String cardNumberStr = textoTarjeta.getText();
+                String cvvStr = textoCVV.getText();
+                String cardholderName = textoNombre.getText();
 
-                    try {
-                        double montoIngresado = Double.parseDouble(montoIngresadoStr);
+                try {
+                    long cardNumber = Long.parseLong(cardNumberStr);
+                    int cvv = Integer.parseInt(cvvStr);
 
-                        if ("212378".equals(codigoCajero)) {
-                            double vuelto = montoIngresado - precio;
-                            if (vuelto >= 0) {
-                                JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente. Su vuelto es: " + vuelto);
-                                procesarPago();
-                            } else {
-                                JOptionPane.showMessageDialog(Panel_Compra.this, "Monto ingresado insuficiente.");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(Panel_Compra.this, "Código de cajero inválido.");
+                    ValidadorPago validador = new ValidadorPago(tipo, cardNumber, cvv, cardholderName);
+                    if (validador.validar()) {
+                        JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente");
+                        ArrayList<Pasaje> pasajes = new ArrayList<>();
+                        for (Asiento asiento : asientos) {
+                            Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), cardholderName, "Fecha y Hora de Salida");
+                            pasajes.add(pasaje);
                         }
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(Panel_Compra.this, "Monto ingresado inválido: " + ex.getMessage());
+                        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+                        fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
+                    } else {
+                        throw new Exception("Datos inválidos");
                     }
-                } else {
-                    String cardNumberStr = textoTarjeta.getText();
-                    String cvvStr = textoCVV.getText();
-                    String cardholderName = textoNombre.getText();
-
-                    try {
-                        long cardNumber = Long.parseLong(cardNumberStr);
-                        int cvv = Integer.parseInt(cvvStr);
-
-                        ValidadorPago validador = new ValidadorPago(tipo, cardNumber, cvv, cardholderName);
-                        if (validador.validar()) {
-                            procesarPago();
-                        } else {
-                            throw new Exception("Datos inválidos");
-                        }
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(Panel_Compra.this, "Número de tarjeta o CVV inválidos: " + ex.getMessage());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(Panel_Compra.this, "Error al validar pago: " + ex.getMessage());
-                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(Panel_Compra.this, "Número de tarjeta o CVV inválidos: " + ex.getMessage());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(Panel_Compra.this, "Error al validar pago: " + ex.getMessage());
                 }
             }
         });
@@ -322,9 +314,12 @@ public class Panel_Compra extends JPanel {
         listaAsientosTXT.setText(listaAsientos.toString());
     }
 
-    private void cambiarAPanelPasaje(Pasaje pasaje) {
-        fondo.avanzaPanel(new Panel_pasajes(pasaje), this);
+    public void cambiarAPanelPasaje(ArrayList<Pasaje> pasajes) {
+        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+        panelPasaje.setBackground(Color.WHITE);  // Ajusta el color de fondo según necesites
+        fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
     }
+
 
 
     //color de fondo
@@ -370,10 +365,11 @@ public class Panel_Compra extends JPanel {
                     int numeroAsiento = 12; // Ejemplo
                     String nombrePasajero = "Juan Pérez"; // Ejemplo
                     String horarioFechaSalida = "2024-07-10 08:00 AM"; // Ejemplo
-
+                    ArrayList<Pasaje> pasajes = new ArrayList<>();
                     Pasaje pasaje = new Pasaje(bus, numeroAsiento, nombrePasajero, horarioFechaSalida);
+                    pasajes.add(pasaje);
 
-                    cambiarAPanelPasaje(pasaje);
+                    cambiarAPanelPasaje(pasajes);
                 } else {
                     throw new Exception("Validación fallida");
                 }
@@ -381,6 +377,8 @@ public class Panel_Compra extends JPanel {
                 JOptionPane.showMessageDialog(Panel_Compra.this, "Error en el pago: " + ex.getMessage());
             }
         }
+
+
     }
     // Clase ValidadorPago ya se encuentra casi en la etapa final
     public class ValidadorPago {

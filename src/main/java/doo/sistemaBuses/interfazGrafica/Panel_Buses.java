@@ -14,15 +14,14 @@ import java.util.Date;
 
 public class Panel_Buses extends JPanel {
 
+    private terminalBus terminal;
     private Bus bus_seleccionado;
 
     public Panel_Buses(Panel_fondo fondo){
         this.setLayout(null);
         this.setBounds(0,0,1000,1000);
 
-        // Test
-        Date currentDate = new Date();
-        bus_seleccionado = new SalonCama(1, currentDate);
+        terminal = fondo.getTerminalBus();
 
         SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
         String fecha = simple.format(fondo.getfecha());

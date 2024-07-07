@@ -14,9 +14,11 @@ import java.awt.event.ActionListener;
 
 public class Panel_fondo extends JPanel{
     private static Panel_fondo panel_fondo = new Panel_fondo();
-    Panel_Fecha panel_fecha;
-    ArrayList<JPanel> Paneles;
-    Panel_pasajes panel_Pasajes;
+    private Panel_Fecha panel_fecha;
+    private ArrayList<JPanel> Paneles;
+    private ArrayList<Date> terminales_fechas;
+    private ArrayList<terminalBus> terminales_cont;
+    private Panel_pasajes panel_Pasajes;
     private Date Fecha;
 
 
@@ -58,9 +60,17 @@ public class Panel_fondo extends JPanel{
 
     public void setfecha(Date fecha){
         Fecha = fecha;
+        if(!terminales_fechas.contains(fecha)){
+            terminales_fechas.add(fecha);
+            terminales_cont.add(new terminalBus(fecha));
+        }
     }
     public Date getfecha(){
         return Fecha;
+    }
+
+    public terminalBus getTerminalBus(){
+        return terminales_cont.get(terminales_fechas.indexOf(Fecha));
     }
 
     public Date variarFecha(Date fecha, int valor){

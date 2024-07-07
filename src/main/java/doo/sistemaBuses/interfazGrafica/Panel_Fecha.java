@@ -1,17 +1,20 @@
 package doo.sistemaBuses.interfazGrafica;
+
+import doo.sistemaBuses.logicaNegocio.terminalBus;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Panel_Fecha extends JPanel{
     int verificador=1;
-
-
 
     public Panel_Fecha(Panel_fondo panel_fondo){
 
@@ -21,7 +24,6 @@ public class Panel_Fecha extends JPanel{
         JLabel print = new JLabel("Ingresa la fecha de salida de bus: (dia/mes/año)");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendario = Calendar.getInstance();
-
 
 
         this.add(texto);

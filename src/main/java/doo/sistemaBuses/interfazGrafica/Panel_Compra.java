@@ -187,7 +187,23 @@ public class Panel_Compra extends JPanel {
             this.cardholderName = cardholderName;
         }
 
+        public boolean validar() {
+            String cardNumberStr = Long.toString(cardNumber);
+            if (cardNumberStr.length() != 16) {
+                return false;
+            }
 
+            String cvvStr = Integer.toString(cvv);
+            if (cvvStr.length() != 3 && cvvStr.length() != 4) {
+                return false;
+            }
+
+            if (cardholderName.isEmpty()) {
+                return false;
+            }
+
+            return true;
+        }
     }
 
 }

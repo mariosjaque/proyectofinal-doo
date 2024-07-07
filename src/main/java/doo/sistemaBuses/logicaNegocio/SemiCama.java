@@ -1,9 +1,10 @@
 package doo.sistemaBuses.logicaNegocio;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class SemiCama extends Bus{
-    public SemiCama(int patente, Date horaSalida){
-        super(1, patente, horaSalida);
+    public SemiCama(int patente, Instant horaSalida, String recorrido){
+        super(0, patente, horaSalida, recorrido);
     }
+
 }

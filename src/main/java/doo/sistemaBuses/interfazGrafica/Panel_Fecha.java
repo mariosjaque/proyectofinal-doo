@@ -21,7 +21,8 @@ public class Panel_Fecha extends JPanel{
         JLabel print = new JLabel("Ingresa la fecha de salida de bus: (dia/mes/año)");
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendario = Calendar.getInstance();
-        Date Fecha_inicio = formato.parse("8/7/2024");
+
+
 
         this.add(texto);
         this.add(print);
@@ -39,6 +40,9 @@ public class Panel_Fecha extends JPanel{
                 int tecla_presionada = e.getKeyCode();
                 if(tecla_presionada == KeyEvent.VK_ENTER){
                     try {
+                        Date Fecha_inicio = new Date();
+                        String String_Fecha_inicio = formato.format(Fecha_inicio);
+                        Fecha_inicio = formato.parse(String_Fecha_inicio);
                         Date fecha;
                         fecha = formato.parse(texto.getText());
                         for(int i=0;i<=14;i++){

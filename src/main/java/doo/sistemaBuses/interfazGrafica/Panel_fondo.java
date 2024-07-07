@@ -38,7 +38,6 @@ public class Panel_fondo extends JPanel{
         terminales_cont = new ArrayList<>();
         panel_fecha = new Panel_Fecha(this,Fecha_inicio);
         Paneles.add(panel_fecha);
-        panel_Pasajes = new Panel_pasajes();
 
         panel_fecha.setBackground(Color.blue);
         //panel_Pasajes.setBackground(Color.yellow);

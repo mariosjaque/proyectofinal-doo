@@ -80,11 +80,7 @@ public class Panel_pasajes extends JPanel {
         volverAlInicio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    Ventana ventana = new Ventana();
-                } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
-                }
+                // Cambiar lógica
             }
         });
 

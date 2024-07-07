@@ -110,14 +110,14 @@ public class Panel_Compra extends JPanel {
             }
         });
     }
-    private void mostrarPantallaInicial() {
-        this.removeAll();
-        this.repaint();
-        new Panel_Compra(new Panel_fondo());
-    }
+    //private void mostrarPantallaInicial() {
+      //  this.removeAll();
+        //this.repaint();
+        //new Panel_Compra(new Panel_fondo());
+    //}
 
     private void cambiarAPanelPasaje(Pasaje pasaje) {
-        fondo.avanzaPanel(new Panel_pasajes(pasaje));
+        fondo.avanzaPanel(new Panel_pasajes());
     }
 
 
@@ -164,6 +164,7 @@ public class Panel_Compra extends JPanel {
                     String horarioFechaSalida = "2024-07-10 08:00 AM"; // Ejemplo
 
                     Pasaje pasaje = new Pasaje(bus, numeroAsiento, nombrePasajero, horarioFechaSalida);
+
                     cambiarAPanelPasaje(pasaje);
                 } else {
                     throw new Exception("Validación fallida");

@@ -127,4 +127,17 @@ public class Panel_Compra extends JPanel {
         g.setColor(Color.gray);
         g.fillRect(0,0,1000,1000);
     }
+    private class DebitoActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mostrarFormularioTarjeta("Débito");
+        }
+    }
+
+    private class CreditoActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mostrarFormularioTarjeta("Crédito");
+        }
+    }
 }

@@ -199,10 +199,11 @@ public class Panel_Compra extends JPanel {
                         JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente");
                         ArrayList<Pasaje> pasajes = new ArrayList<>();
                         for (Asiento asiento : asientos) {
+                            asiento.compraAsiento();
                             Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), cardholderName, "Fecha y Hora de Salida");
                             pasajes.add(pasaje);
                         }
-                        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+                        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
                         fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
                     } else {
                         throw new Exception("Datos inválidos");
@@ -289,10 +290,11 @@ public class Panel_Compra extends JPanel {
                             for (Asiento asiento : asientos) {
                                 Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), "Fecha y Hora de Salida");
                                 pasajes.add(pasaje);
+                                asiento.compraAsiento();
                                 Asiento asiento_numero = new Asiento(asiento.getNumero());
                                 asientosSeleccionados.add(asiento_numero);
                             }
-                            Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+                            Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
                             fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
 
                         } else {
@@ -319,7 +321,7 @@ public class Panel_Compra extends JPanel {
         for (Asiento asiento : asientos) {
             pasajes.add(new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), "Fecha y Hora de Salida"));
         }
-        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
         fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
 
     }
@@ -333,7 +335,7 @@ public class Panel_Compra extends JPanel {
     }
 
     public void cambiarAPanelPasaje(ArrayList<Pasaje> pasajes) {
-        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes);
+        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
         panelPasaje.setBackground(Color.WHITE);  // Ajusta el color de fondo según necesites
         fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
     }

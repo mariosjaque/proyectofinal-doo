@@ -11,11 +11,12 @@ public class Panel_pasajes extends JPanel {
     private ArrayList<Pasaje> pasajes;
     Panel_fondo fondo;
 
-    public Panel_pasajes(ArrayList<Pasaje> pasajes) {
+    public Panel_pasajes(ArrayList<Pasaje> pasajes, Panel_fondo panelFondo) {
         this.pasajes = pasajes;
         this.setLayout(null);
         this.setBounds(0, 0, 1000, 1000);
         this.setBackground(new Color(30, 30, 30));
+        fondo = panelFondo;
 
         JLabel label = new JLabel("Detalles del Pasaje");
         label.setBounds(50, 20, 300, 30);
@@ -64,8 +65,6 @@ public class Panel_pasajes extends JPanel {
         retroceder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 fondo.retrocedePanel(Panel_pasajes.this);
             }
         });
@@ -80,7 +79,7 @@ public class Panel_pasajes extends JPanel {
         volverAlInicio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cambiar lógica
+                fondo.reset(Panel_pasajes.this);
             }
         });
 

@@ -16,10 +16,9 @@ public class Asiento {
         return reservado;
     }
 
-    public boolean compraAsiento(){
+    public void compraAsiento(){
         if(!reservado) {
             reservado = true;
         }
-        return reservado;
     }
 }

@@ -64,6 +64,13 @@ public class Panel_fondo extends JPanel{
         Paneles.getLast().setVisible(true);
     }
 
+    public void reset(JPanel jp) {
+        Paneles = new ArrayList<>();
+        Paneles.add(panel_fecha);
+        panel_fecha.setVisible(true);
+        jp.setVisible(false);
+    }
+
     public void setfecha(Date fecha){
         Fecha = fecha;
         if(!terminales_fechas.contains(fecha)){

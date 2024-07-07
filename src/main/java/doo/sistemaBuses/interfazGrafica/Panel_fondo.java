@@ -47,17 +47,6 @@ public class Panel_fondo extends JPanel{
         panel_Pasajes.setVisible(false);
         panel_buses.setVisible(false);
 
-        Date currentDate = new Date();
-        ArrayList<Pasaje> pasajes = new ArrayList<Pasaje>();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Fecha_inicio = formato.parse("8/7/2024");
-        for(int i=0;i<=14;i++){
-            Pasaje pasaje = new Pasaje();
-            pasaje.setBus(new SalonCama(1,currentDate));
-            pasajes.add(pasaje);
-            pasajes.get(i).asignar_fecha_bus(Fecha_inicio);
-            Fecha_inicio = this.variarFecha(Fecha_inicio,i);
-        }
 
     }
 

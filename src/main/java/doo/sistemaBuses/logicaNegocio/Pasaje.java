@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class Pasaje extends JPanel {
     private Bus bus;

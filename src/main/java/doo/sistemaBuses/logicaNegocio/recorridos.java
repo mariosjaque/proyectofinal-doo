@@ -1,5 +1,9 @@
 package doo.sistemaBuses.logicaNegocio;
 
+/**
+ * Enum que contiene los distintos recorridos, con una string que los representay el precio de un asiento por cada recorrido.
+ */
+
 public enum recorridos {
     ConcepcionSantiago("Concepcion-Santiago",10000),
     ConcepcionLosAngeles("Concepcion-Los Angeles",2000),

@@ -6,10 +6,20 @@ import java.time.Instant;
 import static java.time.temporal.ChronoUnit.HOURS;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+/**
+ * Clase terminal de Buses
+ * @author Santiago Diaz
+ * @author Mario Salgado
+ */
 public class terminalBus {
     private ArrayList<Bus> Buses;
     private Date fecha;
 
+    /**
+     * Constructor del terminal de buses, genera los buses respectivos.
+     *
+     * @param fechaInicial the fecha inicial
+     */
     public terminalBus(Date fechaInicial) {
         Buses = new ArrayList<>();
         fecha = fechaInicial;
@@ -27,10 +37,21 @@ public class terminalBus {
         }
     }
 
+    /**
+     * Getter de un bus especifico.
+     *
+     * @param i Indice del bus.
+     * @return El Objeto Bus solicitado
+     */
     public Bus getBuses(int i) {
         return Buses.get(i);
     }
 
+    /**
+     * Getter de la cantidad actual de Buses
+     *
+     * @return Entero con los buses prontos a salir.
+     */
     public int getNumeroBuses() {
         return Buses.size();
     }

@@ -1,5 +1,9 @@
 package doo.sistemaBuses.logicaNegocio;
 
+/**
+ * Enum que tiene el itinerario de buses con, en este caso, 7 salidas por dia, considerando hora y minuto de cada salida
+ * Recorrido y modelo del bus estan representados con enteros
+ */
 public enum itinerario {
     salida1(8,0,0,1),
     salida2(9,15,1,0),
@@ -31,6 +35,7 @@ public enum itinerario {
     public int getRecorrido() {
         return recorridoAnden;
     }
+
     public int getModeloBus() {
         return modeloBusAnden;
     }

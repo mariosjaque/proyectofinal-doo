@@ -9,6 +9,11 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Clase Pasaje
+ * Representa el pasaje comprado y maneja su propia representacion como archivo externo.
+ * @author Santiago Diaz
+ */
 public class Pasaje extends JPanel {
     private Bus bus;
     private int numeroAsiento;
@@ -19,6 +24,14 @@ public class Pasaje extends JPanel {
     private static DateTimeFormatter formatoFechaHora2 = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss").withZone(ZoneId.systemDefault());
 
 
+    /**
+     * Constructor que recibe la informacion relevante a este pasaje
+     *
+     * @param bus                El bus al que pertenece
+     * @param numeroAsiento      El numero de asiento en tal bus
+     * @param nombrePasajero     Nombre del pasajero
+     * @param horarioFechaSalida Instante con fecha y hora de salida.
+     */
     public Pasaje(Bus bus, int numeroAsiento, String nombrePasajero, Instant horarioFechaSalida) {
         this.bus = bus;
         this.numeroAsiento = numeroAsiento;
@@ -27,28 +40,63 @@ public class Pasaje extends JPanel {
         this.precio = bus.getRecorridoBus().getPrecio(); // Precio del pasaje
     }
 
+    /**
+     * Getter para obtener bus asociado.
+     *
+     * @return retorna el Bus en cuestion
+     */
     public Bus getBus() {
         return bus;
     }
 
+    /**
+     * Getter para obtener numero de asiento asociado al pasaje
+     *
+     * @return Entero que es Numero de asiento
+     */
     public int getNumeroAsiento() {
         return numeroAsiento;
     }
 
+    /**
+     * Getter para obtener el nombre del pasajero titular de este Pasaje
+     *
+     * @return Cadena o String con nombre del pasajero
+     */
     public String getNombrePasajero() {
         return nombrePasajero;
     }
 
+    /**
+     * Getter de fecha y horario de Salida de este bus como un String.
+     *
+     * @return String o cadena con horario de salida en formato especifico
+     */
     public String getHorarioFechaSalida() {
         return formatoFechaHora.format(horarioFechaSalida);
     }
 
+    /**
+     * Getter del precio del pasaje
+     *
+     * @return entero que es el precio
+     */
     public double getPrecio() {
         return precio;
     }
+
+    /**
+     * Método para generar el nombre de archivo externo PDF asociado a Pasaje.
+     *
+     * @return String con nombre de archivo.
+     */
     public String generarNombreArchivo() {
         return "Pasaje_" + formatoFechaHora2.format(Instant.now()) + "_" + this.getNumeroAsiento() + "_"+ bus.getRecorridoBus()+ "_"+ bus.getPatenteBus() + ".pdf";
     }
+
+    /**
+     * Método que genera el archivo externo PDF de este propio Objeto.
+     */
     public void generarPDF() {
 
         Document document = new Document();

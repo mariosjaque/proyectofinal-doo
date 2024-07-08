@@ -5,16 +5,22 @@ import com.itextpdf.text.pdf.*;
 import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Pasaje extends JPanel {
     private Bus bus;
     private int numeroAsiento;
     private String nombrePasajero;
-    private String horarioFechaSalida;
+    private Instant horarioFechaSalida;
     private double precio;
+    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());;
+    private static DateTimeFormatter formatoFechaHora2 = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss").withZone(ZoneId.systemDefault());;
 
-    public Pasaje(Bus bus, int numeroAsiento, String nombrePasajero, String horarioFechaSalida) {
+
+    public Pasaje(Bus bus, int numeroAsiento, String nombrePasajero, Instant horarioFechaSalida) {
         this.bus = bus;
         this.numeroAsiento = numeroAsiento;
         this.nombrePasajero = nombrePasajero;
@@ -35,7 +41,7 @@ public class Pasaje extends JPanel {
     }
 
     public String getHorarioFechaSalida() {
-        return horarioFechaSalida;
+        return formatoFechaHora.format(horarioFechaSalida);
     }
 
     public double getPrecio() {
@@ -52,7 +58,7 @@ public class Pasaje extends JPanel {
     public static String generarNombreArchivo(ArrayList<Pasaje> numAsiento) {
         String tipoBus = "SemiCama"; // Ajusta según cómo obtienes el tipo de bus
 
-        String nombreArchivo = "Pasaje_" + tipoBus + numAsiento + ".pdf";
+        String nombreArchivo = "Pasaje_" + formatoFechaHora2.format(Instant.now()) + numAsiento + ".pdf";
         return nombreArchivo;
     }
     public static void generarPDF(ArrayList<Pasaje> pasajes) {

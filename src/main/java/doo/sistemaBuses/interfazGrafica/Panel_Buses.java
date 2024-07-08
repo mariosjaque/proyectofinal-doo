@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -20,27 +22,26 @@ public class Panel_Buses extends JPanel {
     private JComboBox<String> recorridoComboBox;
     private JPanel busButtonsPanel;
     private JComboBox<modelosBus> modeloBusComboBox;
+    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());;
 
 
-    public Panel_Buses(Panel_fondo fondo){
+    public Panel_Buses(Panel_fondo fondo) {
         this.setLayout(null);
-        this.setBounds(0,0,1000,1000);
+        this.setBounds(0, 0, 1000, 1000);
 
         terminal = fondo.getTerminalBus();
         ImageIcon imagen_fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
         JLabel Fondo = new JLabel();
-        Fondo.setIcon(new ImageIcon(imagen_fondo.getImage().getScaledInstance(1000,1000,Image.SCALE_SMOOTH)));
-        Fondo.setBounds(0,0,1000,1000);
-
-
+        Fondo.setIcon(new ImageIcon(imagen_fondo.getImage().getScaledInstance(1000, 1000, Image.SCALE_SMOOTH)));
+        Fondo.setBounds(0, 0, 1000, 1000);
 
 
         SimpleDateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
         String fecha = simple.format(fondo.getfecha());
-        JLabel Titulo = new JLabel("Pasajes del dia "+fecha);
-        Titulo.setFont(new Font("Serif",Font.BOLD,20));
+        JLabel Titulo = new JLabel("Pasajes del dia " + fecha);
+        Titulo.setFont(new Font("Serif", Font.BOLD, 20));
         this.add(Titulo);
-        Titulo.setBounds(300,0,400,20);
+        Titulo.setBounds(300, 0, 400, 20);
 
         // Create JComboBox for bus model selection
         JLabel modeloBusLabel = new JLabel("Modelo de Bus:");
@@ -55,8 +56,6 @@ public class Panel_Buses extends JPanel {
         modeloBusComboBox.setBounds(210, 50, 200, 30);
 
 
-
-
         JLabel horarioLabel = new JLabel("Horario de Salida:");
         horarioLabel.setForeground(Color.white);
         this.add(horarioLabel);
@@ -65,6 +64,7 @@ public class Panel_Buses extends JPanel {
         horarioComboBox = new JComboBox<>();
 
         horarioComboBox.addItem("08:00 AM");
+        horarioComboBox.addItem("09:15 AM");
         horarioComboBox.addItem("12:00 PM");
         horarioComboBox.addItem("04:00 PM");
         horarioComboBox.addItem("08:00 PM");
@@ -142,7 +142,7 @@ public class Panel_Buses extends JPanel {
         for (int i = 0; i < numeroBuses; i++) {
             Bus bus = terminal.getBuses(i);
             if (bus.getModeloBus() == modelosBus.SalonCama) {
-                JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + bus.getHorarioBus() + " - " + bus.getRecorridoBus());
+                JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + formatoFechaHora.format(bus.getHorarioBus()) + " - " + bus.getRecorridoBus());
                 busButton.setFont(new Font("Arial", Font.PLAIN, 16));
                 busButton.setBackground(Color.LIGHT_GRAY);
                 busButton.setFocusPainted(false);
@@ -150,12 +150,12 @@ public class Panel_Buses extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         bus_seleccionado = bus;
-                        JOptionPane.showMessageDialog(null, "Bus seleccionado: " + bus.getModeloBus() + "\nHorario: " + bus.getHorarioBus() + "\nRecorrido: " + bus.getRecorridoBus());
+                        JOptionPane.showMessageDialog(null, "Bus seleccionado: " + bus.getModeloBus() + "\nHorario: " + formatoFechaHora.format(bus.getHorarioBus()) + "\nRecorrido: " + bus.getRecorridoBus());
                     }
                 });
                 busButtonsPanel.add(busButton);
             } else if (bus.getModeloBus() == modelosBus.SemiCama) {
-                JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + bus.getHorarioBus() + " - " + bus.getRecorridoBus());
+                JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + formatoFechaHora.format(bus.getHorarioBus()) + " - " + bus.getRecorridoBus());
                 busButton.setFont(new Font("Arial", Font.PLAIN, 16));
                 busButton.setBackground(Color.LIGHT_GRAY);
                 busButton.setFocusPainted(false);
@@ -163,15 +163,12 @@ public class Panel_Buses extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         bus_seleccionado = bus;
-                        JOptionPane.showMessageDialog(null, "Bus seleccionado: " + bus.getModeloBus() + "\nHorario: " + bus.getHorarioBus() + "\nRecorrido: " + bus.getRecorridoBus());
+                        JOptionPane.showMessageDialog(null, "Bus seleccionado: " + bus.getModeloBus() + "\nHorario: " + formatoFechaHora.format(bus.getHorarioBus()) + "\nRecorrido: " + bus.getRecorridoBus());
                     }
                 });
 
             }
         }
-    }
-    private int generateRandomPatente() {
-        return (int) (Math.random() * 10000);
     }
 
     public void paintComponent(Graphics g){

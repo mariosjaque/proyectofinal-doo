@@ -208,7 +208,7 @@ public class Panel_Compra extends JPanel {
                         ArrayList<Pasaje> pasajes = new ArrayList<>();
                         for (Asiento asiento : asientos) {
                             asiento.compraAsiento();
-                            Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), cardholderName, "Fecha y Hora de Salida");
+                            Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), cardholderName, bus.getHorarioBus());
                             pasajes.add(pasaje);
                         }
                         Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
@@ -297,7 +297,7 @@ public class Panel_Compra extends JPanel {
                             ArrayList<Pasaje> pasajes = new ArrayList<>();
                             ArrayList<Asiento> asientosSeleccionados = new ArrayList<>();
                             for (Asiento asiento : asientos) {
-                                Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), "Fecha y Hora de Salida");
+                                Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), bus.getHorarioBus());
                                 pasajes.add(pasaje);
                                 asiento.compraAsiento();
                                 Asiento asiento_numero = new Asiento(asiento.getNumero());
@@ -329,7 +329,7 @@ public class Panel_Compra extends JPanel {
         JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente");
         ArrayList<Pasaje> pasajes = new ArrayList<>();
         for (Asiento asiento : asientos) {
-            pasajes.add(new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), "Fecha y Hora de Salida"));
+            pasajes.add(new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), bus.getHorarioBus()));
         }
         Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
         fondo.avanzaPanel(panelPasaje, Panel_Compra.this);

@@ -21,11 +21,11 @@ public class terminalBus {
             horaSalida = horaSalida.plus(horario.getMinutos(), MINUTES);
             for (int j = 0; j < 3; j++) {
                 switch (horario.getModeloBus(j)) {
-                    case 1:
-                        Buses.add(new SemiCama(100000 + i, horaSalida, horario.getRecorrido(j)));
+                    case 0:
+                        Buses.add(new SemiCama(100000 + i, horaSalida, recorridos.values()[horario.getRecorrido(j)]));
                         break;
-                    case 2:
-                        Buses.add(new SalonCama(200000 + i, horaSalida, horario.getRecorrido(j)));
+                    case 1:
+                        Buses.add(new SalonCama(200000 + i, horaSalida, recorridos.values()[horario.getRecorrido(j)]));
                         break;
                 }
             }

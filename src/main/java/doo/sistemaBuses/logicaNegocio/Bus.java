@@ -9,10 +9,10 @@ public abstract class Bus {
     private Instant horarioBus;
     private modelosBus modeloBus;
     private int patenteBus;
-    private String recorridoBus;
+    private recorridos recorridoBus;
     private ArrayList<Asiento> Asientos;
 
-    public Bus(int tipoBus, int patente, Instant horaSalida, String recorrido) {
+    public Bus(int tipoBus, int patente, Instant horaSalida, recorridos recorrido) {
         fechaSalida = Date.from(horaSalida);
         horarioBus = horaSalida;
         patenteBus = patente;
@@ -37,7 +37,7 @@ public abstract class Bus {
         return Asientos.get(i);
     }
 
-    public String getRecorridoBus() {
+    public recorridos getRecorridoBus() {
         return recorridoBus;
     }
 

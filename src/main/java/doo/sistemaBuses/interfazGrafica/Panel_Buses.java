@@ -16,9 +16,11 @@ public class Panel_Buses extends JPanel {
     private Bus bus_seleccionado;
     //private JComboBox<String> modeloBusComboBox;
     private JComboBox<String> horarioComboBox;
-    private JComboBox<String> recorridoComboBox;
+    private JComboBox<recorridos> recorridoComboBox;
     private JPanel busButtonsPanel;
     private JComboBox<modelosBus> modeloBusComboBox;
+    private modelosBus modeloSeleccionado;
+    private recorridos recorridoSeleccionado;
     private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
 
 
@@ -47,26 +49,20 @@ public class Panel_Buses extends JPanel {
         modeloBusLabel.setBounds(50, 50, 150, 30);
 
         modeloBusComboBox = new JComboBox<>();
-        modeloBusComboBox.addItem(modelosBus.SemiCama);
-        modeloBusComboBox.addItem(modelosBus.SalonCama);
+        for(int i=0;i<modelosBus.values().length;i++){
+            modeloBusComboBox.addItem(modelosBus.values()[i]);
+        }
         this.add(modeloBusComboBox);
         modeloBusComboBox.setBounds(210, 50, 200, 30);
+        modeloBusComboBox.addActionListener(new ActionListener() {
 
-
-        JLabel horarioLabel = new JLabel("Horario de Salida:");
-        horarioLabel.setForeground(Color.white);
-        this.add(horarioLabel);
-        horarioLabel.setBounds(50, 100, 150, 30);
-
-        horarioComboBox = new JComboBox<>();
-
-        horarioComboBox.addItem("08:00 AM");
-        horarioComboBox.addItem("09:15 AM");
-        horarioComboBox.addItem("12:00 PM");
-        horarioComboBox.addItem("04:00 PM");
-        horarioComboBox.addItem("08:00 PM");
-        this.add(horarioComboBox);
-        horarioComboBox.setBounds(210, 100, 200, 30);
+            @SuppressWarnings("unchecked")
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox<modelosBus> comboBox = (JComboBox<modelosBus>) e.getSource();
+                modeloSeleccionado = (modelosBus) comboBox.getSelectedItem() ;
+            }
+        });
 
         JButton actualizarButton = new JButton("Actualizar Buses");
         actualizarButton.setBounds(450, 150, 200, 30);
@@ -85,12 +81,20 @@ public class Panel_Buses extends JPanel {
         recorridoLabel.setBounds(50, 150, 150, 30);
 
         recorridoComboBox = new JComboBox<>();
-
-        recorridoComboBox.addItem("Ruta 1: CCP - STGO");
-        recorridoComboBox.addItem("Ruta 2: STGO - CCP");
-        //recorridoComboBox.addItem("Ruta 3: C - S");
+        for(int i=0;i<recorridos.values().length;i++){
+            recorridoComboBox.addItem(recorridos.values()[i]);
+        }
         this.add(recorridoComboBox);
         recorridoComboBox.setBounds(200, 150, 200, 30);
+        recorridoComboBox.addActionListener(new ActionListener() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox<recorridos> comboBox = (JComboBox<recorridos>) e.getSource();
+                recorridoSeleccionado = (recorridos) comboBox.getSelectedItem() ;
+            }
+        });
 
         JButton siguiente = new JButton("Siguiente");
         JButton retroceder = new JButton("Anterior");
@@ -138,7 +142,7 @@ public class Panel_Buses extends JPanel {
         int numeroBuses = terminal.getNumeroBuses();
         for (int i = 0; i < numeroBuses; i++) {
             Bus bus = terminal.getBuses(i);
-            if (bus.getModeloBus() == modelosBus.SalonCama) {
+            if (bus.getModeloBus() == modeloSeleccionado && bus.getRecorridoBus() == recorridoSeleccionado) {
                 JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + formatoFechaHora.format(bus.getHorarioBus()) + " - " + bus.getRecorridoBus());
                 busButton.setFont(new Font("Arial", Font.PLAIN, 16));
                 busButton.setBackground(Color.LIGHT_GRAY);
@@ -151,19 +155,6 @@ public class Panel_Buses extends JPanel {
                     }
                 });
                 busButtonsPanel.add(busButton);
-            } else if (bus.getModeloBus() == modelosBus.SemiCama) {
-                JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + formatoFechaHora.format(bus.getHorarioBus()) + " - " + bus.getRecorridoBus());
-                busButton.setFont(new Font("Arial", Font.PLAIN, 16));
-                busButton.setBackground(Color.LIGHT_GRAY);
-                busButton.setFocusPainted(false);
-                busButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        bus_seleccionado = bus;
-                        JOptionPane.showMessageDialog(null, "Bus seleccionado: " + bus.getModeloBus() + "\nHorario: " + formatoFechaHora.format(bus.getHorarioBus()) + "\nRecorrido: " + bus.getRecorridoBus());
-                    }
-                });
-
             }
         }
     }

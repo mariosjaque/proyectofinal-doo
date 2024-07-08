@@ -1,18 +1,19 @@
 package doo.sistemaBuses.logicaNegocio;
 
 public enum itinerario {
-    salidas1(8,0,"Concepcion-Santiago",1,null,0,null,0),
-    salidas2(9,15,"Concepcion-Santiago",1,null,0,null,0);
+    salidas1(8,0,0,1,0,2,0,0),
+    salidas2(9,15,0,2,1,1,0,0),
+    salidas3(12,00,0,1,0,0,0,0);
     private final int horaDia;
     private final int minutoDia;
-    private final String recorridoAnden1;
+    private final int recorridoAnden1;
     private final int modeloBusAnden1;
-    private final String recorridoAnden2;
+    private final int recorridoAnden2;
     private final int modeloBusAnden2;
-    private final String recorridoAnden3;
+    private final int recorridoAnden3;
     private final int modeloBusAnden3;
 
-    itinerario(int horaDia, int minutoDia, String recorridoAnden1, int modeloBusAnden1, String recorridoAnden2, int modeloBusAnden2, String recorridoAnden3, int modeloBusAnden3) {
+    itinerario(int horaDia, int minutoDia, int recorridoAnden1, int modeloBusAnden1, int recorridoAnden2, int modeloBusAnden2, int recorridoAnden3, int modeloBusAnden3) {
         this.horaDia = horaDia;
         this.minutoDia = minutoDia;
         this.recorridoAnden1 = recorridoAnden1;
@@ -31,8 +32,8 @@ public enum itinerario {
         return minutoDia;
     }
 
-    public String getRecorrido(int rec) {
-        String salida = null;
+    public int getRecorrido(int rec) {
+        int salida = 0;
         switch (rec) {
             case 0:
                 salida = recorridoAnden1;

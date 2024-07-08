@@ -40,7 +40,6 @@ public class Panel_Buses extends JPanel {
         this.add(Titulo);
         Titulo.setBounds(300, 0, 400, 20);
 
-        // Create JComboBox for bus model selection
         JLabel modeloBusLabel = new JLabel("Modelo de Bus:");
         modeloBusLabel.setForeground(Color.white);
         this.add(modeloBusLabel);
@@ -62,7 +61,7 @@ public class Panel_Buses extends JPanel {
             }
         });
 
-        JButton actualizarButton = new JButton("Actualizar Buses");
+        JButton actualizarButton = new JButton("Filtrar Buses");
         actualizarButton.setBounds(450, 150, 200, 30);
         this.add(actualizarButton);
 

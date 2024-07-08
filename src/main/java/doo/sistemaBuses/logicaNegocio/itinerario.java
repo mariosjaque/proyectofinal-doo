@@ -4,7 +4,10 @@ public enum itinerario {
     salida1(8,0,0,1),
     salida2(9,15,1,0),
     salida3(10,00,0,0),
-    salida4(12,00,0,1);
+    salida4(11,20,0,1),
+    salida5(12,00,2,1),
+    salida6(13,00,3,1),
+    salida7(14,15,3,0);
     private final int horaDia;
     private final int minutoDia;
     private final int recorridoAnden;

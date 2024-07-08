@@ -17,7 +17,7 @@ public class Pasaje extends JPanel {
     private Instant horarioFechaSalida;
     private double precio;
     private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
-    private static DateTimeFormatter formatoFechaHora2 = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss").withZone(ZoneId.systemDefault());
+    private static DateTimeFormatter formatoFechaHora2 = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss").withZone(ZoneId.systemDefault());
 
 
     public Pasaje(Bus bus, int numeroAsiento, String nombrePasajero, Instant horarioFechaSalida) {
@@ -47,27 +47,14 @@ public class Pasaje extends JPanel {
     public double getPrecio() {
         return precio;
     }
-
-    public static double calcularTotal(ArrayList<Pasaje> pasajes) {
-        double total = 0;
-        for (Pasaje pasaje : pasajes) {
-            total += pasaje.getPrecio();
-        }
-        return total;
+    public String generarNombreArchivo() {
+        return "Pasaje_" + formatoFechaHora2.format(Instant.now()) + "_" + this.getNumeroAsiento() + "_"+ bus.getRecorridoBus()+ "_"+ bus.getPatenteBus() + ".pdf";
     }
-    public static String generarNombreArchivo(ArrayList<Pasaje> numAsiento) {
-        return "Pasaje_" + formatoFechaHora2.format(Instant.now()) + "_" + numAsiento + ".pdf";
-    }
-    public static void generarPDF(ArrayList<Pasaje> pasajes) {
-        if (pasajes.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay pasajes para generar el PDF.");
-            return;
-        }
+    public void generarPDF() {
 
         Document document = new Document();
         try {
-            //String nombrePDF = generarNombreArchivo(pasajes.get(0).getBus(), pasajes.get(0).getNumeroAsiento());
-            String nombrePDF = generarNombreArchivo(pasajes);
+            String nombrePDF = generarNombreArchivo();
 
             PdfWriter.getInstance(document, new FileOutputStream(nombrePDF));
             document.open();
@@ -78,7 +65,7 @@ public class Pasaje extends JPanel {
             title.setSpacingAfter(20);
             document.add(title);
 
-            PdfPTable table = new PdfPTable(4);
+            PdfPTable table = new PdfPTable(6);
             table.setWidthPercentage(100);
             table.setSpacingBefore(10f);
             table.setSpacingAfter(10f);
@@ -87,6 +74,14 @@ public class Pasaje extends JPanel {
             PdfPCell hcell;
 
             hcell = new PdfPCell(new Phrase("Tipo de Bus", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
+            hcell = new PdfPCell(new Phrase("Recorrido Bus", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
+            hcell = new PdfPCell(new Phrase("Patente Bus", headFont));
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
@@ -103,33 +98,43 @@ public class Pasaje extends JPanel {
             table.addCell(hcell);
 
             Font contentFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
-            for (Pasaje pasaje : pasajes) {
-                PdfPCell cell;
+            PdfPCell cell;
 
-                cell = new PdfPCell(new Phrase(String.valueOf(pasaje.getBus().getModeloBus()), contentFont));
+                cell = new PdfPCell(new Phrase(String.valueOf(this.getBus().getModeloBus()), contentFont));
                 cell.setPaddingLeft(5);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(String.valueOf(pasaje.getNumeroAsiento()), contentFont));
+                cell = new PdfPCell(new Phrase(String.valueOf(bus.getRecorridoBus().getRecorrido()), contentFont));
                 cell.setPaddingLeft(5);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(pasaje.getNombrePasajero(), contentFont));
+                cell = new PdfPCell(new Phrase(String.valueOf(bus.getPatenteBus()), contentFont));
                 cell.setPaddingLeft(5);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(pasaje.getHorarioFechaSalida(), contentFont));
+                cell = new PdfPCell(new Phrase(String.valueOf(this.getNumeroAsiento()), contentFont));
                 cell.setPaddingLeft(5);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 table.addCell(cell);
-            }
+
+                cell = new PdfPCell(new Phrase(this.getNombrePasajero(), contentFont));
+                cell.setPaddingLeft(5);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(this.getHorarioFechaSalida(), contentFont));
+                cell.setPaddingLeft(5);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                table.addCell(cell);
 
             document.add(table);
             JOptionPane.showMessageDialog(null, "PDF generado con éxito.");

@@ -44,4 +44,6 @@ public abstract class Bus {
     public Date getFechaSalida() {
         return fechaSalida;
     }
+
+    public int getPatenteBus() { return patenteBus; }
 }

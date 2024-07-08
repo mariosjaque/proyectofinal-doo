@@ -23,8 +23,8 @@ public class Panel_pasajes extends JPanel {
         this.setBackground(new Color(30, 30, 30));
         fondo = panelFondo;
 
-        JLabel label = new JLabel("Detalles del Pasaje");
-        label.setBounds(50, 20, 300, 30);
+        JLabel label = new JLabel("Detalles de los Pasajes Comprados");
+        label.setBounds(50, 20, 700, 30);
         label.setForeground(Color.white);
         label.setFont(new Font("Arial", Font.BOLD, 20));
         this.add(label);
@@ -40,13 +40,15 @@ public class Panel_pasajes extends JPanel {
 
 
         for (Pasaje pasaje : pasajes) {
-            areaDetalles.append("Bus: " + pasaje.getBus().toString() + "\n");
+            areaDetalles.append("Bus: " + pasaje.getBus().getModeloBus() + "\n");
+            areaDetalles.append("Patente: " + pasaje.getBus().getPatenteBus() + "\n");
+            areaDetalles.append("Recorrido: " + pasaje.getBus().getRecorridoBus().getRecorrido() + "\n");
             areaDetalles.append("Número de Asiento: " + pasaje.getNumeroAsiento() + "\n");
             areaDetalles.append("Nombre del Pasajero: " + pasaje.getNombrePasajero() + "\n");
             areaDetalles.append("Fecha y Hora de Salida: " + pasaje.getHorarioFechaSalida() + "\n");
             areaDetalles.append("Precio: $" + pasaje.getPrecio() + "\n\n");
         }
-        JButton confirmarCompra = new JButton("Confirmar Compra");
+        JButton confirmarCompra = new JButton("Exportar Pasajes");
         this.add(confirmarCompra);
         confirmarCompra.setBounds(0, 470, 200, 50);
         confirmarCompra.addActionListener(new ActionListener() {
@@ -54,7 +56,9 @@ public class Panel_pasajes extends JPanel {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    Pasaje.generarPDF(pasajes);
+                    for (Pasaje pasaje2 : pasajes) {
+                        pasaje2.generarPDF();
+                    }
                     mostrarBotonVolverAlInicio();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + ex.getMessage());

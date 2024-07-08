@@ -203,7 +203,8 @@ public class Panel_Compra extends JPanel {
                         ArrayList<Pasaje> pasajes = new ArrayList<>();
                         for (Asiento asiento : asientos) {
                             asiento.compraAsiento();
-                            Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), cardholderName, bus.getHorarioBus());
+                            String s = JOptionPane.showInputDialog("Nombre del pasajero del asiento "+asiento.getNumero()+":");
+                            Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), s, bus.getHorarioBus());
                             pasajes.add(pasaje);
                         }
                         Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
@@ -248,7 +249,7 @@ public class Panel_Compra extends JPanel {
         this.add(textoEfectivo);
         textoEfectivo.setBounds(0, 240, 200, 30);
 
-        JLabel nombrePasajero = new JLabel("Nombre del pasajero");
+        JLabel nombrePasajero = new JLabel("Nombre del comprador");
         this.add(nombrePasajero);
         nombrePasajero.setBounds(0, 280, 200, 50);
         nombrePasajero.setForeground(Color.white);
@@ -285,7 +286,8 @@ public class Panel_Compra extends JPanel {
                             ArrayList<Pasaje> pasajes = new ArrayList<>();
                             ArrayList<Asiento> asientosSeleccionados = new ArrayList<>();
                             for (Asiento asiento : asientos) {
-                                Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), textoNombre.getText(), bus.getHorarioBus());
+                                String s = JOptionPane.showInputDialog("Nombre del pasajero del asiento "+asiento.getNumero()+":");
+                                Pasaje pasaje = new Pasaje(bus, asiento.getNumero(), s, bus.getHorarioBus());
                                 pasajes.add(pasaje);
                                 asiento.compraAsiento();
                                 Asiento asiento_numero = new Asiento(asiento.getNumero());

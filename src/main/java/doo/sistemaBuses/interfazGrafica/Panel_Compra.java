@@ -49,17 +49,33 @@ public class Panel_Compra extends JPanel {
         JButton debito = new JButton("Débito");
         this.add(debito);
         debito.setBounds(20, 60, 150, 50);
-        debito.addActionListener(new DebitoActionListener());
+        debito.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostrarFormularioTarjeta("Débito");
+            }
+        });
 
         JButton credito = new JButton("Crédito");
         this.add(credito);
         credito.setBounds(180, 60, 150, 50);
-        credito.addActionListener(new CreditoActionListener());
+        credito.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostrarFormularioTarjeta("Crédito");
+            }
+        });
 
         JButton efectivo = new JButton("Efectivo");
         this.add(efectivo);
         efectivo.setBounds(340, 60, 150, 50);
-        efectivo.addActionListener(new EfectivoActionListener());
+        efectivo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tipo = "Efectivo";
+                mostrarFormularioEfectivo();
+            }
+        });
 
         JButton retroceder = new JButton("Anterior");
         this.add(retroceder);
@@ -129,27 +145,6 @@ public class Panel_Compra extends JPanel {
         this.removeAll();
 
         this.repaint();
-
-
-        JLabel printSeleccion = new JLabel("Selecciona tu tipo de tarjeta");
-        this.add(printSeleccion);
-        printSeleccion.setBounds(0, 0, 500, 100);
-        printSeleccion.setForeground(Color.white);
-
-        JButton debito = new JButton("Débito");
-        this.add(debito);
-        debito.setBounds(0, 100, 200, 50);
-        debito.addActionListener(new DebitoActionListener());
-
-        JButton credito = new JButton("Crédito");
-        this.add(credito);
-        credito.setBounds(200, 100, 200, 50);
-        credito.addActionListener(new CreditoActionListener());
-
-        JButton efectivo = new JButton("Efectivo");
-        this.add(efectivo);
-        efectivo.setBounds(400, 100, 200, 50);
-        efectivo.addActionListener(new EfectivoActionListener());
 
         JButton retroceder = new JButton("Anterior");
         this.add(retroceder);
@@ -224,13 +219,6 @@ public class Panel_Compra extends JPanel {
             }
         });
         this.add(Fondo);
-    }
-    private class EfectivoActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            tipo = "Efectivo";
-            mostrarFormularioEfectivo();
-        }
     }
     private void mostrarFormularioEfectivo() {
         this.removeAll();
@@ -320,11 +308,6 @@ public class Panel_Compra extends JPanel {
         this.add(Fondo);
     }
 
-    private void mostrarPantallaInicial() {
-        this.removeAll();
-        this.repaint();
-        //new Panel_Compra(fondo);
-    }
     private void procesarPago() {
         JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente");
         ArrayList<Pasaje> pasajes = new ArrayList<>();
@@ -335,39 +318,9 @@ public class Panel_Compra extends JPanel {
         fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
 
     }
-    private void actualizarAsientosPendientes() {
-        StringBuilder listaAsientos = new StringBuilder("<html>Asientos seleccionados:<br>");
-        for (Asiento asiento : asientos) {
-            listaAsientos.append("Asiento ").append(asiento.getNumero()).append("<br>");
-        }
-        listaAsientos.append("</html>");
-        listaAsientosTXT.setText(listaAsientos.toString());
-    }
 
-    public void cambiarAPanelPasaje(ArrayList<Pasaje> pasajes) {
-        Panel_pasajes panelPasaje = new Panel_pasajes(pasajes, fondo);
-        panelPasaje.setBackground(Color.WHITE);  // Ajusta el color de fondo según necesites
-        fondo.avanzaPanel(panelPasaje, Panel_Compra.this);
-    }
-
-
-
-    //color de fondo
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-    }
-    private class DebitoActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            mostrarFormularioTarjeta("Débito");
-        }
-    }
-
-    private class CreditoActionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            mostrarFormularioTarjeta("Crédito");
-        }
     }
 
 }

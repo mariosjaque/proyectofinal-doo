@@ -22,7 +22,7 @@ Se utilizaron los patrones singleton y Holder. Para el patron singleton, creamos
 ## Decisiones
 Durante nuestro proceso para realizar el proyecto podemos destacar las siguientes:
 
--Para mas simplicidad decidimos usar solo 2 tipos de buses que fueron el Saloncama y Semicama.
+-Para más simplicidad decidimos usar solo 2 tipos de buses que fueron el Saloncama y Semicama.
 
 -Limitamos las posibles fechas seleccionables a solo 2 semanas, desde que se inicia el programa.
 

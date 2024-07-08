@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Panel_Fecha extends JPanel{
-    private int verificador=1;
 
     public Panel_Fecha(Panel_fondo panel_fondo,Date Fecha_inicio){
         this.setLayout(null);
@@ -55,6 +54,7 @@ public class Panel_Fecha extends JPanel{
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
+                int verificador=1;
                 int tecla_presionada = e.getKeyCode();
                 if(tecla_presionada == KeyEvent.VK_ENTER){
                     try {

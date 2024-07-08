@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+/**
+ * Panel para confirmar la compra.
+ */
 public class Panel_Compra extends JPanel {
     private JTextField textoTarjeta;
     private ArrayList<Asiento> asientos;
@@ -17,15 +20,17 @@ public class Panel_Compra extends JPanel {
     private JTextField textoMonto;
     private JTextField textoNombre;
     private Panel_fondo fondo;
-    private JLabel listaAsientosTXT;
     private String tipo;
-    private double precio;
-    private JLabel totalTXT;
-    private double totalCompra = 0;
-    private JTextField textoCodigoCajero;
     private double totalPagar;
     private JLabel Fondo;
 
+    /**
+     * Instantiates a new Panel compra.
+     *
+     * @param fondo    fondo/holder
+     * @param bus      bus del usuario
+     * @param asientos lista de asientos seleccionados
+     */
     public Panel_Compra(Panel_fondo fondo, Bus bus, ArrayList<Asiento> asientos) {
         ImageIcon imagen_fondo = new ImageIcon(getClass().getResource("/fondo.jpg"));
         Fondo = new JLabel();
@@ -129,6 +134,7 @@ public class Panel_Compra extends JPanel {
 
         JTextArea areaAsientos = new JTextArea();
         areaAsientos.setEditable(false);
+        areaAsientos.append("Total de la compra: "+totalPagar);
         for (Asiento asiento : asientos) {
             areaAsientos.append("Asiento: " + asiento.getNumero() + "\n");
         }
@@ -137,10 +143,11 @@ public class Panel_Compra extends JPanel {
         this.add(scrollPane);
         this.add(Fondo);
     }
-    public void getPrecio(double precio) {
-        this.precio = precio * asientos.size();
-    }
 
+    /**
+     * Método que genera el formulario para pagar con tarjeta
+     * @param tipo tipo de tarjeta
+     */
     private void mostrarFormularioTarjeta(String tipo) {
         this.removeAll();
 

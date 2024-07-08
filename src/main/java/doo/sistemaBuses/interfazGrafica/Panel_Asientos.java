@@ -8,10 +8,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Panel que muestra los asientos de un bus.
+ */
 public class Panel_Asientos extends JPanel {
+    /**
+     * Lista de asientos que están seleccionados por el usuario.
+     */
     private ArrayList<Asiento> asientosPendientes;
+    /**
+     * Label que muestra la lista de asientos
+     */
     private JLabel listaAsientosTXT;
 
+    /**
+     * Constructor que recibe el panel de fondo (holder) y un bus para mostrar sus asientos
+     * @author Mario Salgado
+     * @author Luis Martinez
+     * @param fondo fondo/holder
+     * @param bus   el bus
+     */
     public Panel_Asientos(Panel_fondo fondo, Bus bus){
         this.setLayout(null);
         this.setBounds(0,0,1000,1000);
@@ -92,6 +108,13 @@ public class Panel_Asientos extends JPanel {
 
 
     }
+
+    /**
+     * Método que genera un botón, representación gráfica de Asiento.
+     * @author Mario Salgado
+     * @param a the a
+     * @return the j button
+     */
     public JButton asientoGrafico(Asiento a) {
         ImageIcon grafico;
         if(!a.isReservado()){
@@ -107,6 +130,10 @@ public class Panel_Asientos extends JPanel {
         return jb;
     }
 
+    /**
+     * Este método permite actualizar la lista de asientos que se encuentran seleccionados.
+     * @author Mario Salgado
+     */
     public void actualizarAsientosPendientes(){
         StringBuilder listaAsientos = new StringBuilder("Asientos seleccionados: ");
         int numAsientosR = asientosPendientes.size();

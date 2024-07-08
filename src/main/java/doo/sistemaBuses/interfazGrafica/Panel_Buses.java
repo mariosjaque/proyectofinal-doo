@@ -10,18 +10,33 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Panel que muestra los buses de un terminal
+ */
 public class Panel_Buses extends JPanel {
-
+    /** Variable para la terminal que almacena buses */
     private terminalBus terminal;
+    /** Bus seleccionado por el usuario */
     private Bus bus_seleccionado;
+    /** Lista de recorridos en interfaz */
     private JComboBox<recorridos> recorridoComboBox;
-    private JPanel busButtonsPanel;
+    /** Lista de modelos en interfaz */
     private JComboBox<modelosBus> modeloBusComboBox;
+    /** Panel de botones de buses */
+    private JPanel busButtonsPanel;
+    /** */
     private modelosBus modeloSeleccionado;
     private recorridos recorridoSeleccionado;
+    /** Un elemento que permite convertir el instant a un string con determinado formato */
     private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
 
 
+    /**
+     * Constructor del panel
+     * @author Santiago Diaz
+     * @author Mario Salgado
+     * @param fondo recibe el fondo/holder (donde se almacena el terminal de buses)
+     */
     public Panel_Buses(Panel_fondo fondo) {
         this.setLayout(null);
         this.setBounds(0, 0, 1000, 1000);
@@ -132,6 +147,11 @@ public class Panel_Buses extends JPanel {
 
 
     }
+
+    /**
+     * Función que permite actualizar la lista de buses.
+     * @author Santiago Diaz
+     */
     private void actualizarBuses() {
         busButtonsPanel.removeAll();
         busButtonsPanel.revalidate();

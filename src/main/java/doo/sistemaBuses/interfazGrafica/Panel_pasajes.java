@@ -1,5 +1,7 @@
 package doo.sistemaBuses.interfazGrafica;
 
+import doo.sistemaBuses.logicaNegocio.Pasaje;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -16,8 +16,8 @@ public class Pasaje extends JPanel {
     private String nombrePasajero;
     private Instant horarioFechaSalida;
     private double precio;
-    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());;
-    private static DateTimeFormatter formatoFechaHora2 = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss").withZone(ZoneId.systemDefault());;
+    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
+    private static DateTimeFormatter formatoFechaHora2 = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss").withZone(ZoneId.systemDefault());
 
 
     public Pasaje(Bus bus, int numeroAsiento, String nombrePasajero, Instant horarioFechaSalida) {
@@ -56,10 +56,7 @@ public class Pasaje extends JPanel {
         return total;
     }
     public static String generarNombreArchivo(ArrayList<Pasaje> numAsiento) {
-        String tipoBus = "SemiCama"; // Ajusta según cómo obtienes el tipo de bus
-
-        String nombreArchivo = "Pasaje_" + formatoFechaHora2.format(Instant.now()) + numAsiento + ".pdf";
-        return nombreArchivo;
+        return "Pasaje_" + formatoFechaHora2.format(Instant.now()) + "_" + numAsiento + ".pdf";
     }
     public static void generarPDF(ArrayList<Pasaje> pasajes) {
         if (pasajes.isEmpty()) {

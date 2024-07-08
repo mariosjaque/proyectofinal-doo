@@ -6,12 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class Panel_Buses extends JPanel {
 
@@ -22,7 +19,7 @@ public class Panel_Buses extends JPanel {
     private JComboBox<String> recorridoComboBox;
     private JPanel busButtonsPanel;
     private JComboBox<modelosBus> modeloBusComboBox;
-    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());;
+    private static DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
 
 
     public Panel_Buses(Panel_fondo fondo) {

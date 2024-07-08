@@ -24,10 +24,7 @@ public class ValidadorPago {
             return false;
         }
 
-        if (cardholderName.isEmpty()) {
-            return false;
-        }
+        return !cardholderName.isEmpty();
 
-        return true;
     }
 }

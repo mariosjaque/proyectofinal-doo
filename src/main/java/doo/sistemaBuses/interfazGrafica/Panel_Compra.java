@@ -35,7 +35,7 @@ public class Panel_Compra extends JPanel {
         this.bus = bus;
         this.asientos = asientos;
         //calcular precio a pagar
-        totalPagar = asientos.size() * 4000;
+        totalPagar = asientos.size() * bus.getRecorridoBus().getPrecio();
 
         this.setLayout(null);
         this.setBounds(0, 0, 1000, 1000);
@@ -279,7 +279,7 @@ public class Panel_Compra extends JPanel {
                     double montoIngresado = Double.parseDouble(montoIngresadoStr);
 
                     if ("212378".equals(codigoCajero)) {
-                        double vuelto = montoIngresado - (4000* asientos.size());
+                        double vuelto = montoIngresado - (bus.getRecorridoBus().getPrecio()* asientos.size());
                         if (vuelto >= 0) {
                             JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente. Su vuelto es: " + vuelto);
                             ArrayList<Pasaje> pasajes = new ArrayList<>();

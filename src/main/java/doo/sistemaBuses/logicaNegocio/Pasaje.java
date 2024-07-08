@@ -25,7 +25,7 @@ public class Pasaje extends JPanel {
         this.numeroAsiento = numeroAsiento;
         this.nombrePasajero = nombrePasajero;
         this.horarioFechaSalida = horarioFechaSalida;
-        this.precio = 4000; // Precio del pasaje
+        this.precio = bus.getRecorridoBus().getPrecio(); // Precio del pasaje
     }
 
     public Bus getBus() {
@@ -45,7 +45,7 @@ public class Pasaje extends JPanel {
     }
 
     public double getPrecio() {
-        return precio = 4000;
+        return precio;
     }
 
     public static double calcularTotal(ArrayList<Pasaje> pasajes) {

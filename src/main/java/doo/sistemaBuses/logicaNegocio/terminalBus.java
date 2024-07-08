@@ -19,15 +19,10 @@ public class terminalBus {
             Instant horaSalida = fecha.toInstant();
             horaSalida = horaSalida.plus(horario.getHoras(), HOURS);
             horaSalida = horaSalida.plus(horario.getMinutos(), MINUTES);
-            for (int j = 0; j < 3; j++) {
-                switch (horario.getModeloBus(j)) {
-                    case 0:
-                        Buses.add(new SemiCama(100000 + i, horaSalida, recorridos.values()[horario.getRecorrido(j)]));
-                        break;
-                    case 1:
-                        Buses.add(new SalonCama(200000 + i, horaSalida, recorridos.values()[horario.getRecorrido(j)]));
-                        break;
-                }
+            if (horario.getModeloBus() == 0) {
+                Buses.add(new SalonCama(100000 + i, horaSalida, recorridos.values()[horario.getRecorrido()]));
+            } else if (horario.getModeloBus() == 1) {
+                Buses.add(new SemiCama(200000 + i, horaSalida, recorridos.values()[horario.getRecorrido()]));
             }
         }
     }

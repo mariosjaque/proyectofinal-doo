@@ -14,8 +14,6 @@ public class Panel_Buses extends JPanel {
 
     private terminalBus terminal;
     private Bus bus_seleccionado;
-    //private JComboBox<String> modeloBusComboBox;
-    private JComboBox<String> horarioComboBox;
     private JComboBox<recorridos> recorridoComboBox;
     private JPanel busButtonsPanel;
     private JComboBox<modelosBus> modeloBusComboBox;
@@ -116,6 +114,7 @@ public class Panel_Buses extends JPanel {
         };
         busButtonsPanel = new JPanel();
         busButtonsPanel.setLayout(new BoxLayout(busButtonsPanel, BoxLayout.Y_AXIS));
+        actualizarBuses();
         JScrollPane scrollPane = new JScrollPane(busButtonsPanel);
         scrollPane.setBounds(50, 200, 900, 500);
         this.add(scrollPane);
@@ -142,8 +141,8 @@ public class Panel_Buses extends JPanel {
         int numeroBuses = terminal.getNumeroBuses();
         for (int i = 0; i < numeroBuses; i++) {
             Bus bus = terminal.getBuses(i);
-            if (bus.getModeloBus() == modeloSeleccionado && bus.getRecorridoBus() == recorridoSeleccionado) {
-                JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + formatoFechaHora.format(bus.getHorarioBus()) + " - " + bus.getRecorridoBus());
+            if (((bus.getModeloBus() == modeloSeleccionado) && (bus.getRecorridoBus() == recorridoSeleccionado)) || (modeloSeleccionado == null) || (recorridoSeleccionado == null)) {
+                JButton busButton = new JButton("Bus " + (i + 1) + ": " + bus.getModeloBus() + " - " + formatoFechaHora.format(bus.getHorarioBus()) + " - " + bus.getRecorridoBus().getRecorrido());
                 busButton.setFont(new Font("Arial", Font.PLAIN, 16));
                 busButton.setBackground(Color.LIGHT_GRAY);
                 busButton.setFocusPainted(false);
@@ -151,7 +150,7 @@ public class Panel_Buses extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         bus_seleccionado = bus;
-                        JOptionPane.showMessageDialog(null, "Bus seleccionado: " + bus.getModeloBus() + "\nHorario: " + formatoFechaHora.format(bus.getHorarioBus()) + "\nRecorrido: " + bus.getRecorridoBus());
+                        JOptionPane.showMessageDialog(null, "Bus seleccionado: " + bus.getModeloBus() + "\nHorario: " + formatoFechaHora.format(bus.getHorarioBus()) + "\nRecorrido: " + bus.getRecorridoBus().getRecorrido());
                     }
                 });
                 busButtonsPanel.add(busButton);

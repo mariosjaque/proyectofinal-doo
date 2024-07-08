@@ -238,12 +238,12 @@ public class Panel_Compra extends JPanel {
 
         JLabel montoIngresado = new JLabel("Monto ingresado");
         this.add(montoIngresado);
-        montoIngresado.setBounds(0, 150, 300, 50);
+        montoIngresado.setBounds(0, 100, 300, 50);
         montoIngresado.setForeground(Color.white);
 
         textoMonto = new JTextField();
         this.add(textoMonto);
-        textoMonto.setBounds(0, 200, 200, 30);
+        textoMonto.setBounds(0, 150, 200, 30);
 
         JButton validarPago = new JButton("Validar Pago");
         this.add(validarPago);

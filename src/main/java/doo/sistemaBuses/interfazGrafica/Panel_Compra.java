@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 
 /**
  * Panel para confirmar la compra.
+ * @author Santiago Diaz
+ * @author Mario Salgado
  */
 public class Panel_Compra extends JPanel {
     private JTextField textoTarjeta;
@@ -25,7 +27,7 @@ public class Panel_Compra extends JPanel {
     private JLabel Fondo;
 
     /**
-     * Instantiates a new Panel compra.
+     * Constructor del panel compra, recibe el fondo, el bus seleccionado y los asientos selccionados para
      *
      * @param fondo    fondo/holder
      * @param bus      bus del usuario
@@ -91,42 +93,6 @@ public class Panel_Compra extends JPanel {
                 fondo.retrocedePanel(Panel_Compra.this);
             }
         });
-        JButton validarPago = new JButton("Validar Pago");
-        this.add(validarPago);
-        validarPago.setBounds(20, 370, 200, 50);
-        validarPago.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ("Efectivo".equals(tipo)) {
-                    String codigoEfectivo = textoEfectivo.getText();
-                    if ("212378".equals(codigoEfectivo)) {
-                        procesarPago();
-                    } else {
-                        JOptionPane.showMessageDialog(Panel_Compra.this, "Código de cajero inválido.");
-                    }
-                } else {
-                    String cardNumberStr = textoTarjeta.getText();
-                    String cvvStr = textoCVV.getText();
-                    String cardholderName = textoNombre.getText();
-
-                    try {
-                        long cardNumber = Long.parseLong(cardNumberStr);
-                        int cvv = Integer.parseInt(cvvStr);
-
-                        ValidadorPago validador = new ValidadorPago(tipo, cardNumber, cvv, cardholderName);
-                        if (validador.validar()) {
-                            procesarPago();
-                        } else {
-                            throw new Exception("Datos inválidos");
-                        }
-                    } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(Panel_Compra.this, "Número de tarjeta o CVV inválidos: " + ex.getMessage());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(Panel_Compra.this, "Error al validar pago: " + ex.getMessage());
-                    }
-                }
-            }
-        });
         JLabel asientosSeleccionados = new JLabel("Asientos seleccionados:");
         this.add(asientosSeleccionados);
         asientosSeleccionados.setBounds(650, 10, 200, 30);
@@ -134,7 +100,7 @@ public class Panel_Compra extends JPanel {
 
         JTextArea areaAsientos = new JTextArea();
         areaAsientos.setEditable(false);
-        areaAsientos.append("Total de la compra: "+totalPagar);
+        areaAsientos.append("Total de la compra: "+totalPagar+"\n");
         for (Asiento asiento : asientos) {
             areaAsientos.append("Asiento: " + asiento.getNumero() + "\n");
         }
@@ -147,6 +113,7 @@ public class Panel_Compra extends JPanel {
     /**
      * Método que genera el formulario para pagar con tarjeta
      * @param tipo tipo de tarjeta
+     * @author Santiago Diaz
      */
     private void mostrarFormularioTarjeta(String tipo) {
         this.removeAll();
@@ -228,6 +195,10 @@ public class Panel_Compra extends JPanel {
         });
         this.add(Fondo);
     }
+
+    /** Método que genera el formulario para pagar con efectivo
+     * @author Santiago Diaz
+     * */
     private void mostrarFormularioEfectivo() {
         this.removeAll();
         this.repaint();
@@ -267,12 +238,12 @@ public class Panel_Compra extends JPanel {
 
         JLabel montoIngresado = new JLabel("Monto ingresado");
         this.add(montoIngresado);
-        montoIngresado.setBounds(0, 370, 300, 50);
+        montoIngresado.setBounds(0, 150, 300, 50);
         montoIngresado.setForeground(Color.white);
 
         textoMonto = new JTextField();
         this.add(textoMonto);
-        textoMonto.setBounds(0, 420, 200, 30);
+        textoMonto.setBounds(0, 200, 200, 30);
 
         JButton validarPago = new JButton("Validar Pago");
         this.add(validarPago);
@@ -285,7 +256,7 @@ public class Panel_Compra extends JPanel {
 
                 try {
                     double montoIngresado = Double.parseDouble(montoIngresadoStr);
-
+                    // Código cajero es una contraseña para certificar que solo el cajero pueda confirmar el pago en efectivo.
                     if ("212378".equals(codigoCajero)) {
                         double vuelto = montoIngresado - (bus.getRecorridoBus().getPrecio()* asientos.size());
                         if (vuelto >= 0) {
@@ -317,6 +288,9 @@ public class Panel_Compra extends JPanel {
         this.add(Fondo);
     }
 
+    /** Método que se encarga de generar los objetos Pasaje para hacer los archivos PDF
+     * @author Santiago Diaz
+     */
     private void procesarPago() {
         JOptionPane.showMessageDialog(Panel_Compra.this, "Pago validado correctamente");
         ArrayList<Pasaje> pasajes = new ArrayList<>();

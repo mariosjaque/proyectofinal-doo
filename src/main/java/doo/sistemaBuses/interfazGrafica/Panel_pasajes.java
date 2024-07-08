@@ -8,10 +8,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Panel que muestra el detalle de pasajes ya comprados y que maneja la gestión de generar los archivos PDF.
+ * @author Santiago Diaz
+ * @author Luis Martinez
+ */
 public class Panel_pasajes extends JPanel {
     private ArrayList<Pasaje> pasajes;
+    /**
+     * Variable para almacenar el panel_fondo
+     */
     Panel_fondo fondo;
 
+    /**
+     * Constructor de panel_pasajes, donde se crea la interfaz para mostrar la lista de pasajes.
+     *
+     * @param pasajes   Recibe la lista de pasajes emitidos.
+     * @param panelFondo Recibe el panel fondo/holder.
+     */
     public Panel_pasajes(ArrayList<Pasaje> pasajes, Panel_fondo panelFondo) {
         this.pasajes = pasajes;
         this.setLayout(null);
@@ -65,7 +79,6 @@ public class Panel_pasajes extends JPanel {
                 }
             }
         });
-        //demasiados botones ahora cada uno se va a identificar como "sufijo"+"Btn"
 
 
         JButton retroceder = new JButton("Anterior");
@@ -81,6 +94,7 @@ public class Panel_pasajes extends JPanel {
 
     }
 
+    /** Método para mostrar el botón que reinicia el programa manteniendo el estado de los terminales de bus ya creados */
     private void mostrarBotonVolverAlInicio() {
         JButton volverAlInicio = new JButton("Inicio");
         volverAlInicio.setBounds(200, 550, 150, 50);

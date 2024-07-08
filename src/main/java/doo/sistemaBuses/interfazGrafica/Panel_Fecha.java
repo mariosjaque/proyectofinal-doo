@@ -11,8 +11,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Panel Fecha, el panel que da la bienvenida al usuario y toma la fecha
+ * @author Luis Martinez
+ */
 public class Panel_Fecha extends JPanel{
 
+    /**
+     * Constructor, recibe el panel_fondo/holder y la fecha en la que se recibe el programa, y genera la interfaz
+     *
+     * @param panel_fondo  panel fondo
+     * @param Fecha_inicio fecha de apertura del programa (dia de hoy)
+     */
     public Panel_Fecha(Panel_fondo panel_fondo,Date Fecha_inicio){
         this.setLayout(null);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -90,6 +100,14 @@ public class Panel_Fecha extends JPanel{
 
 
     }
+
+    /**
+     * Método que permite iterar a lo largo de varias fechas
+     * @author Luis Martinez
+     * @param fecha la fecha inicial
+     * @param valor el numero de dias a sumar
+     * @return la  fecha final
+     */
     public Date variarFecha(Date fecha, int valor){
         if (valor==0) return fecha;
         Calendar calendar = Calendar.getInstance();
